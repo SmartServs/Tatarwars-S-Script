@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+include("core-s/conf-s/tcex-con.php");
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+?>
+<?php
+if ( $this->data['player_type'] == 2 ) {
+
+echo '<p style="text-align: center; "><span style="font-family:tahoma,geneva,sans-serif;">';
+echo "الأضافه جنود للواحات";
+echo "<br>";
+echo "//";
+echo "<br>";
+echo "سيتم اضافه جنود للواحات";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo '<a href="?get=addwh"><span style="color:#008000;"><span style="font-family: tahoma, geneva, sans-serif; ">اضافة جنود للواحات</span>';
+echo "<br>";
+echo "<br>";
+echo "<br>";
+echo "<br>";
+if($_GET['get'] == "addwh"){
+mysql_query("update `p_villages` set `troops_num` = \"-1:31 8,32 4,33 6,34 4,35 5,36 7,37 5,38 3,39 4,40 1\" where is_oasis=1");
+echo '<p style="text-align: center; "><span style="font-family:tahoma,geneva,sans-serif;">';
+echo "<b>تم اضافه جنود للواحات<b>";
+echo '<br>';
+echo "تم ";
+echo '<br>';
+echo '';
+exit;
+}
+echo "<br>";
+echo "<br>";
+echo "<br>";
+}
+?>
+</body>
+</html>

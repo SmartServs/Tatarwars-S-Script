@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<style>
+    form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+form p {
+  font-size: 30px;
+  color: #333;
+  margin-bottom: 50px;
+}
+
+form input[type="text"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  font-size: 20px;
+}
+
+form input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+form input[type="submit"]:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+
+.error-message {
+  color: red;
+  font-size: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+.success-message {
+  color: green;
+  font-size: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+</style>
+<form action="h1231restore.php" method="post">
+<p >ميزة استرجاع البطل من قبل المدير</p><br><br>
+ <font color=purple><b> اسم اللاعب:</b></font><input class="text" name="name" value="" maxlength="50" type="text">
+  <br><br><input type="submit" name="submit" value="استرجاع">
+</form>
+<?php
+include('./core-s/conf-s/tcex-con.php');
+
+$idpl = 1;
+if ($this->player->playerId == $idpl )
+{
+
+$db_connect = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword'])or die("1");
+mysql_select_db($AppConfig['db']['webdatabase'], $db_connect);
+if (isset($_POST['submit'])) { 
+$name = $_POST['name'];
+$active = mysql_query("SELECT * From p_villages WHERE player_name='$name' && is_capital ='1'") or die(mysql_error());
+$active = mysql_fetch_array($active);
+$village1 = $active['id'];
+if ( $village1 != 0){
+mysql_query("UPDATE p_players SET hero_in_village_id='$village1' WHERE name='$name' ") or die( mysql_error());
+
+echo "
+<p class='success-message'>
+عزيزي مدير اللعبة أحسنت! لقد تم استرجاع البطل في القرية الخاصة باللاعب بنجاح</p>";
+echo'<br>';
+    echo"
+    <p class='success-message'>
+    في حال كان البطل موجود بالقرية فعلًا أو لايوجد به مشاكل لن يؤثر هذا عليك</p>";
+}
+else {
+echo"
+<p class='error-message'>لم يتم استرجاع البطل يبدو أن الشروط الخاصة بالاسترجاع لم تتحقق أو ان البطل موجود فعلًا في قريتك أو انك لست مدير اللعبة فأنت غير مصرح بهذا الاجراء</p>";}
+}
+}
+else {
+    echo '<font color = "red" size= "20">';
+    echo "عذرًا أنت لست مدير اللعبة وغير مصرح لك بالتواجد هنا تم حصر الآيبي الخاص بك وبقاءك سوف يعرضك للحظر النهائي فضلًا الخروج من هذه الصفحة!";
+    echo '</font>';
+    echo '<script type="text/JavaScript">  
+             setTimeout(function(){
+            window.location.href = "village1.php"
+         }, 5000);
+
+     </script>' 
+; 
+
+}
+?>
+<br>
+<center>
+<font size="3" >
+
+<a href="village1.php"> الرجوع الى القرية</a></font></center>
+ برجاء عدم مشاركة هذا الملف مع أي طرف غير مدير اللعبة وهو سري للغاية!
+
+<br>
+
+في حال تم استرجاع البطل ل لاعب يملك البطل في قريته او مرسله لقرية ثانية تعزيز او غيره لن يأثر عليه ولن يتدبل اذا رجع التعزيز سيكون البطل واحد عندما يلتقي البطلين .. حيث يتم اجبار نزول بطل في القرية الاساسية باستخدام هذه الاضافة بغض النظر عن اي بطل موجود بالخارج.. وغالبًا يتم استخدام الاضافة في حال ضياع البطل فقدانه او اختفاءه لاسمح الله.
+
+</body>
+</html>

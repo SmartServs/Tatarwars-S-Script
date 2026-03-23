@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+include("core-s/conf-s/tcex-con.php");
+    $link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+
+$roww = mysql_query("SELECT reg FROM p_players" );
+$roww = mysql_fetch_array($roww);
+$xx = $roww['reg'];
+
+if ($xx == 1){ 
+require( APP_PATH."conf-s/tcex-con.php" );
+?>
+  <h1><img src="core-s/st-s/x.gif" class="register" alt="<?php echo LANGUI_REG_T1; ?>"></h1>
+
+  <h5><img src="core-s/st-s/x.gif" class="img_u05" alt="<?php echo LANGUI_REG_T2; ?>"></h5>
+  لحفظ الموقع كتطبيق على هاتفك اضغط على <img src="https://help.apple.com/assets/6131099BC85F872D4343C838/61314B490AA3FE346D6469E5/ar_EG/207ee78d2fed6058c49d33266b875a0f.png" alt="زر مشاركة" style="width:15px  !important;" width="24" height="30" /> ثم فتح بسفاري ، او متصفحك الخاص <br />
+ بعد ذلك اضغط على <img src="https://help.apple.com/assets/6131099BC85F872D4343C838/61314B490AA3FE346D6469E5/ar_EG/207ee78d2fed6058c49d33266b875a0f.png" alt="زر مشاركة" style="width:15px  !important;" width="24" height="30" /> مجدداً واختر اضافة للصفحة الرئيسية، وسيكون الموقع مسجلاً كتطبيق بهاتفك مباشرة .
+<?php
+$m1 = new RegisterModel();
+$this->datastats = $m1->GetGsummaryData();
+
+$start_time = (time()-$this->datastats['server_start_time']);
+$regover = ($AppConfig['Game']['RegisterOver']*24*60*60);
+$m1->dispose( );
+
+if ($start_time > $regover){
+?>
+هذه السيرفر بلغ الحد الاقصى من اللاعبين.  <br> فضلاً قم بالضغط على كلمة التسجيل أدناه للتوجه للصفحه الرئيسيه <br> والضغط على تسجيل واختيار السيرفر المتاح للتسجيل<br><br><a href="index.php">التسجيل <<</a>
+<?php
+} else {
+ if (!$this->success) {
+?>
+  <p><?php echo LANGUI_REG_T3; ?> 
+
+<a href="#" onclick="return showManual(0,0);">الدليل </a>
+
+
+  <?php echo LANGUI_REG_T5; ?>
+
+  </p>
+  <form method="post" action="
+<?php if (isset ($_GET['ref'])) {
+echo "register.php?ref=".$_GET['ref'];
+} else {
+echo "register.php";
+} ?>" />
+  <table cellpadding="1" cellspacing="1" id="sign_input">
+  <tbody><tr class="top"><th><?php echo LANGUI_REG_T6; ?>:</td>
+  
+  <td><input class="text" type="text" name="name" value="<?php
+      if (isset($_POST['name'])) {
+          echo htmlspecialchars(trim($_POST['name']));
+      } else if (isset($this->SNdata['user_name'])) {
+          echo $this->SNdata['user_name'];
+      } ?>" maxlength="15" />
+  <span class="error">
+  <?php echo $this->err[0]; ?>
+  </span></td></tr>
+  <tr><th><?php echo LANGUI_REG_T7; ?>:</th>
+  <td><input class="text" type="text" name="email" value="<?php
+      if (isset($_POST['email'])) {
+          echo trim($_POST['email']);
+      } else if (isset($this->SNdata['email'])) {
+          echo $this->SNdata['email'];
+      } ?>" maxlength="40" />
+  <span class="error">
+  <?php echo $this->err[1]; ?>
+  </span></td></tr>
+  <tr>
+  <th><?php echo LANGUI_REG_T8; ?>:</th>
+  <td><input class="text" type="password" name="pwd" value="<?php
+      if (isset($_POST['pwd'])) {
+          echo trim($_POST['pwd']);
+      } ?>" maxlength="20" />
+
+  <span class="error"><?php echo $this->err[2]; ?></span>
+</td></tr><!--<tr class="btm"> 
+                       <!-- <th>كود التحقق: <img src="captcha.php" alt="Captcha" style="margin-bottom: -8px;"></th> 
+                        <td><input class="text" type="text" name="Cap" value="<?php if (isset($_POST['Cap'])) {
+          echo trim($_POST['Cap']);
+      } ?>" maxlength="4"> <span class="error"><?php echo $this->err[6]; ?></span></td> 
+                </tr>-->
+
+</tbody></table>
+  <table cellpadding="1" cellspacing="1" id="sign_select">
+  <tbody>
+  <tr class="top">
+  <th><img src="core-s/st-s/x.gif" class="img_u06" alt="<?php echo LANGUI_REG_T9; ?>">
+  </th>
+  <th colspan="2"><img src="core-s/st-s/x.gif" class="img_u07" alt="<?php echo LANGUI_REG_T10; ?>" >
+  </th></tr>
+  <tr>
+  <td class="nat"><label><img src = "core-s/st-s/x.gif" >&nbsp;<input class="radio" type="radio" name="tid" value="1"
+<?php
+      if (isset($_POST['tid']) && $_POST['tid'] == 1) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo tribe_1; ?>
+  </label></td>
+    <tr><td class="nat"><label><img src = "core-s/st-s/x.gif" >&nbsp;<input class="radio" type="radio" name="tid" value="7"
+<?php
+      if (isset($_POST['tid']) && $_POST['tid'] == 7) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo tribe_7; ?>
+  </label></td>
+  <td class="pos1"><label><input class="radio" type="radio" name="kid" value="0"
+<?php
+      if (!isset($_POST['kid']) || $_POST['kid'] == 0) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo LANGUI_REG_T11; ?>
+  </label></td>
+  <td class="pos2">&nbsp;</td>
+  </tr>
+  <tr><td class="nat"><label><img src = "core-s/st-s/x.gif" >&nbsp;<input class="radio" type="radio" name="tid" value="2"
+<?php
+      if (isset($_POST['tid']) && $_POST['tid'] == 2) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo tribe_2; ?>
+  </label></td>
+  <td><label><input class="radio" type="radio" name="kid" value="1"
+<?php
+      if (isset($_POST['kid']) && $_POST['kid'] == 1) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo LANGUI_REG_T12; ?>
+  </label></td>
+  <td><label><input class="radio" type="radio" name="kid" value="2"
+<?php
+      if (isset($_POST['kid']) && $_POST['kid'] == 2) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo LANGUI_REG_T13; ?>
+  </label></td>
+  </tr>
+  <tr>
+  <td><label><img src = "core-s/st-s/x.gif" >&nbsp;<input class="radio" type="radio" name="tid" value="3"
+<?php
+      if (isset($_POST['tid']) && $_POST['tid'] == 3) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php
+ echo tribe_3; ?>
+  </label></td>
+  <td><label><input class="radio" type="radio" name="kid" value="3"
+<?php
+      if (isset($_POST['kid']) && $_POST['kid'] == 3) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo LANGUI_REG_T14; ?>
+  </label></td>
+  <td><label><input class="radio" type="radio" name="kid" value="4"
+<?php
+      if (isset($_POST['kid']) && $_POST['kid'] == 4) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo LANGUI_REG_T15; ?>
+  
+  <td rowspan="2"></td>
+  </tr>
+  <tr class="btm">
+ <!-- <td><label><input class="radio" type="radio" name="tid" value="1"
+<?php
+      if (isset($_POST['tid']) && $_POST['tid'] == 1) {
+          echo "checked=\"checked\"";
+      } ?> />&nbsp;<?php echo tribe_1; ?>
+  </label></td>-->
+  <td rowspan="2"></td>
+  </tr></tbody></table>
+  <ul class="important"><?php echo $this->err[3]; ?></ul>
+    <input type="checkbox" name="agreement" required="" />
+  <b style="">أوافق على <font color="#339966" style="">قواعد اللعبة</font> و <font color="#339966" style="">سياسة الخصوصية</font>.
+  <p class="btn"><input type="image" value="register" name="s1" id="btn_signup" class="dynamic_img" src="core-s/st-s/x.gif" alt="<?php echo LANGUI_REG_T16; ?>" /></p>
+  </form>
+  
+<?php
+$timetemping = time() <= $GLOBALS['AppConfig']['system']['server_start'];
+if( $timetemping ) {
+?>
+<script language="JavaScript">
+timingnow = '<?php echo date("m/d/Y h:i:s A", mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('Y'))); ?>';
+TargetDate = "<?php echo date("m/d/Y h:i:s A", $GLOBALS['AppConfig']['system']['server_start']); ?>";
+BackColor = "black";
+ForeColor = "white";
+CountActive = true;
+CountStepper = -1;
+LeadingZero = true;
+DisplayFormat = "<center><font color='black'><p style='font-size:20px;'>بقي على انطلاق اللعب : </font><font style='font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;'>%%D%%:%%H%%:%%M%%:%%S%%</font></center>";
+FinishMessage = "";
+</script>
+<script language="JavaScript" src="core-s/st-s/countdown.js"></script>
+<?php
+} else {
+$timetemping = "";
+
+}
+  } else {
+echo '
+<p>
+مرحباً <b>
+'.((isset($_POST['name']))? trim($_POST['name']) : '').'</b><br>
+                                <br>تم التسجيل بنجاح ولا تحتاج لتفعيل بريدي<br><br>
+يمكنك الان <a href="login.php">تسجيل الدخول</a> والبدأ باللعب
+		<br><br>بريدك الالكتروني هو : <span class="important">'.((isset($_POST['email']))? trim($_POST['email']) : '').'</span>
+';
+  }
+  }
+}
+else
+{
+    echo"<br><br>";
+    echo'<font color= "red" size="5"><b>عزيزي اللاعب عذرًا التسجيل مغلق يمكنك التسجيل في السيرفر االثاني من خلال  
+    <br>
+    <a href="https://www.server.com/login">
+    https://www.server.com/login
+    </a>
+    </b></font>';
+echo '<meta http-equiv="refresh" content="5;url=https://www.server.com/login">';
+}
+?>
+<script src="custom_scripts.js?d=<?=time()?>"></script>
+</body>
+</html>

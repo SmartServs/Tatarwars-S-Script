@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+
+$idpl = 1;
+
+if ($this->player->playerId == $idpl )
+{
+
+
+?><br>
+<form action="mextract.php" method="post"><center>
+     <font color=purple><b>عزيزي مدير لعبة حرب التتار من فضلك الضغط على الزر أدناه لاظهار كافة الايميلات المسجلّة لديكم<b></font>
+  <br><br><input type="submit" name="submit" value="أظهر ايميلات اللاعبين"></center>
+</form><br><br>
+<?php
+if (isset($_POST['submit'])) { 
+    
+
+echo "<table border='1'>
+<tr>
+<td><font color='blue' size='3'><b>البريد الالكتروني الخاص بمجموع اللاعبين المسجلين في حرب التتار</b></td>
+</tr>";
+echo '<ul>';
+include('./core-s/conf-s/tcex-con.php');
+$db_connect = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword'])or die("1");
+mysql_select_db($AppConfig['db']['webdatabase'], $db_connect);
+
+		$select = mysql_query("SELECT * FROM p_players ");
+
+while ( $row = mysql_fetch_array($select) )
+{
+echo "<tr>";
+if ($row['email'] != NULL || $row['email'] != ''){
+echo "<td><b><li>" .$row['email']."</li></b><br></td>";
+}
+else if ($row['player_type']==3){
+    echo "<th><font color='green'><b>هذا الحساب خاص بالتتار ولايحتوي على قيمة</b></font></th>";
+}
+else 
+{
+echo "<th><font color='red'><b>بريد اللاعب فارغ أو غير متوفّر حاليًا أو يوجد به خلل</b></font></th>";
+}
+echo "</tr>";
+}
+echo '</ul>';
+echo "</table>";
+
+    
+}
+
+echo '<br><a href="village1.php">قم بالرجوع للقرية</a>';
+}
+
+else {
+    echo"عذرًا هذه الصفحة مخصصة لمدير اللعبة فقط ! تم تسجيل عنوان الآيبي الخاص بك ... قم بتسجيل الخروج من هذه الصفحة او سيتم حظرك من خلال النظام تلقائيًا";
+}
+?>
+</body>
+</html>

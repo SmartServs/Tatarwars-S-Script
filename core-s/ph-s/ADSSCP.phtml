@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<br>
+<br>
+<?php
+echo "\r\n<table cellpadding=\"1\" cellspacing=\"1\" >\r\n\t";
+    echo "<thead>\r\n\t\t";
+    echo "<tr><th colspan=\"4\"><font color='orange'>لوحة التحكم</font></th></tr>\r\n\t\t";
+    echo "<tr>\r\n\t\t\t<td></td><td></td></tr>";
+    require ("./core-s/conf-s/tcex-con.php");
+	echo "<tr>";
+	echo "<td><font color='red'>اضافة موارد للواحات</font></td>";
+    echo "<td><a href=\"addnewmord.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<tr>";
+	echo "<td><font color='red'>اضافة جنود للواحات</font></td>";
+    echo "<td><a href=\"addtroops.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<tr>";
+	echo "<td><font color='red'>فك الحماية من لاعب</font></td>";
+    echo "<td><a href=\"unprotect.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<tr>";
+	echo "<td><font color='red'>تجديد حماية جميع الاعبيين</font></td>";
+    echo "<td><a href=\"prcnewforser.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<tr>";
+	echo "<td><font color='red'>الغاء حذف جميع الاعبيين</font></td>";
+    echo "<td><a href=\"alludel.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<tr>";
+	echo "<td><font color='red'>تغيير اسم لاعب</font></td>";
+    echo "<td><a href=\"changepn.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<td><font color='red'>فلترة الرسائل</font></td>";
+    echo "<td><a href=\"adcp.php\"><input type=\"submit\" name=\"name\" value=\"تشغيل\"</td>";
+    echo "</tr>";
+	echo "<td><b><font color='green'>⭐ إظهار التتار</font></b></td>";
+    echo "<td><a href=\"login.php?102eetr014212install1020\"><input type=\"submit\" name=\"name\" value=\"إظهار\"</td>";
+    echo "</tr>";
+	echo "</tr>";
+	echo "<td><b><font color='green'>⭐ إعادة السيرفر</b></font></td>";
+    echo "<td><a href=\"login.php?102014212install1020\"><input type=\"submit\" name=\"name\" value=\"إعادة\"</td>";
+    echo "</tr>";
+    echo "</table>";
+?>
+</body>
+</html>

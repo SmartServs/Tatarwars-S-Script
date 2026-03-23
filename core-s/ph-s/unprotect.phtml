@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+include('core-s/conf-s/tcex-con.php');
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+?>
+
+<?
+/*----------------[ فك الحماية ]------------------*/
+
+if($_POST['submit']){
+$name = $_POST['name'];
+
+$update = mysql_query("update p_players set registration_date = '0000-00-00 00:00:00' where name='".$name."'")or die(mysql_error());
+
+if($update){
+echo "تم فك الحماية عن العضو ".$name." .";
+}else{
+echo "حدثت مشكلة احد المحاولة";
+}
+}
+
+
+?>
+
+<form id="contact" method="post" action="unprotect.php">
+<fieldset><legend><p align="center"><font color="#FF0000"><b>فك الحماية عن عضو</font></b></p></legend>
+
+<tr>
+<td>أسم العضو : </td>
+<td><input name="name" type="text" value="" /></td>
+</tr>
+
+<tr>
+<td><input name="submit" type="submit" value="فك الحماية" /></td>
+</tr>
+</form>
+
+
+</tr>
+</form>
+</body>
+</html>

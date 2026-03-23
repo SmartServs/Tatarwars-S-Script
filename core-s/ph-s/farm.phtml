@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+###############################################
+##   o99g@hotmil.com    &&   Abdullh El/enzi ##
+###############################################
+###############################################
+##   Alq0rsan@hotmil.com    &&   Alq0rsan    ##
+###############################################
+if ($this->data['goldclub'] != 1) {
+?>
+<div style="text-aligne:center;padding:20px;">
+<b>قائمة المزارع متضمنة في نادي الذهب، ولا يلزمك دفع المزيد من المصاريف. </b><br><br>
+<a href="plus.php?t=2#goldclub">» عضوية في نادي الذهب</a>
+</div>
+<?php
+}else {
+?>
+<h1>قائمة المزارع</h1>
+<script src="core-s/st-s/jquery.js" type="text/javascript"></script>
+<script>var texting = "<?php echo LANGUI_FARM_T8; ?>";</script>
+<script>var texting2 = "أضغط هنا وتصفح اللعبه والمزارع سيهجم تلقائيا !!!";</script>
+<script type="text/javascript" src="farmjs.php"></script>
+<div id="farming"></div><br>
+<form name='farm'>
+<table cellspacing="1" cellpadding="1" id="brought_in">
+<thead>
+<tr>
+<th style="width: 10%"><input type='checkbox' onclick='CheckAll(this.checked)'></th>
+<th style="width: 45%">الاسم</th>
+<th style="width: 15%">السكان</th>
+<th style="width: 15%"><?php echo LANGUI_FARM_T2; ?></th>
+<th style="width: 25%"><a href="farm.php?delall"><img src="core-s/st-s/x.gif" class="del" title="حذف جميع المزارع"></a></th>
+</tr>
+</thead>
+<tbody>
+<?php
+if(strlen($this->calldata()) >= 10) {
+    echo $this->calldata();
+} else {
+    echo "<tr><td colspan='6'><center>".LANGUI_FARM_T4."</center></td></tr>";
+}
+?>
+</tbody>
+</table>
+<br><input class="text" name="attack" type="button" value="بدأ الهجوم" onClick="javascript:farming();scrollTo(0,0);">
+</form>
+<br>
+<br>
+<form action="farm.php" method="get">
+<table cellspacing="1" cellpadding="1" id="brought_in">
+<thead>
+<tr>
+<th colspan="4"><center><?php echo LANGUI_FARM_T6; ?></center></th>
+</tr>
+</thead>
+<tr>
+<td style="width: 10%"><center>x</center></td>
+<td style="width: 40%"><center><input class="text" type="text" name="x" value="<?php echo isset($_GET['x']) ? $_GET['x'] : ""; ?>" size="8"></center></td>
+<td style="width: 10%"><center>y</center></td>
+<td style="width: 40%"><center><input class="text" type="text" name="y" value="<?php echo isset($_GET['y']) ? $_GET['y'] : ""; ?>" size="8"></center></td>
+</tr>
+<tr>
+<td><center><?php echo LANGUI_FARM_T2; ?></center></td>
+<td><center><select name="t1">
+<?php
+$start = 0;
+if($this->data['tribe_id'] == 2)
+{
+$start = 10;
+}
+if($this->data['tribe_id'] == 3)
+{
+$start = 20;
+}
+if($this->data['tribe_id'] == 6)
+{
+$start = 50;
+}
+if($this->data['tribe_id'] == 7)
+{
+$start = 99;
+}
+if($this->data['tribe_id'] == 8)
+{
+$start = 60;
+}
+if($this->data['tribe_id'] == 9)
+{
+$start = 70;
+}
+for ( $i = 1; $i <= 6; $i += 1) {
+echo "<option value='".$i."'>".htmlspecialchars( constant( "troop_".($start+$i) ) )."</option>";
+}
+?>
+</select>  <input class="text" type="text" name="t2" value="<?php echo isset($_GET['x']) ? (isset($_GET['y']) ? "5" : "") : ""; ?>" size="8"></center></td>
+<td colspan="2"><center><input class="text" name="add" type="submit" value="<?php echo LANGUI_FARM_T7; ?>"></center></td>
+</tr>
+</table>
+</form>
+<?php } ?>
+<script>
+if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+</body>
+</html>

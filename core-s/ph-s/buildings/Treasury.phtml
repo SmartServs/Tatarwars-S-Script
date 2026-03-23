@@ -1,0 +1,331 @@
+<?php
+$this->selectedTabIndex = isset( $_GET['t'] ) && is_numeric( $_GET['t'] ) && 0 <= intval( $_GET['t'] ) && intval( $_GET['t'] ) <= 3 ? intval( $_GET['t'] ) : 0;
+$q = new QueueModel();
+?>
+<div id="textmenu">
+<a href="build.php?id=<?php echo $this->buildingIndex; ?>"
+<?php
+if ( $this->selectedTabIndex == 0 )
+{
+echo " class=\"selected\"";
+}
+?>
+>التحف</a>
+| <a href="build.php?id=<?php echo $this->buildingIndex; ?>&t=1"
+<?php
+if ( $this->selectedTabIndex == 1 )
+{
+echo " class=\"selected\"";
+}
+?>
+>التحف الخاصة بي</a>
+</div>
+
+<?php
+if (isset($_GET['show'])) {
+if (is_numeric($_GET['show'])) {
+$show = $result = $q->provider->fetchRow("select * from  p_villages where is_artefacts= 1 AND id='".$_GET['show']."'");
+if ($show != '') {
+?>
+<div class="artefact image-<?php 
+if ($show['type'] == 1) {
+echo "fool";
+}else {
+switch ($show['artefacts']) {
+case 1:
+echo "2";
+break;
+case 2:
+echo "5";
+break;
+case 3:
+echo "8";
+break;
+case 4:
+echo "10";
+break;
+case 5:
+echo "9";
+break;
+}
+}
+ ?>">
+<table cellspacing="1" cellpadding="1" id="art_details">
+<thead>
+<tr>
+<th colspan="2"><?php 
+if ($show['type'] == 1) {
+echo "تحفة الجوكر";
+} else {
+switch ($show['artefacts']) {
+case 1:
+echo "قوات سريعه";
+break;
+case 2:
+echo "الكشاف الماهر";
+break;
+case 3:
+echo "‎ بناء قوات سريعه";
+break;
+case 4:
+echo "المهندس المعماري";
+break;
+case 5:
+echo "مخبأ الكبير";
+break;
+case 6:
+echo "بناء المخازن الكبيره";
+break;
+}
+}
+?></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="desc" colspan="2">
+<span class="detail">
+&lrm;&lrm;
+<?php 
+if ($show['type'] == 1) {
+echo "تحفة الجوكر كل 24 ساعه مفعول للتحفه المفعول الحالي هو ";
+}
+switch ($show['artefacts']) {
+case 1:
+echo "تزيد سرعة قواتك بشكل ملحوظ";
+break;
+case 2:
+echo "‎‎جميع أنواع الجواسيس للقبائل تزيد قوتها الهجومية والدفاعية ضد الهجمات عليك";
+break;
+case 3:
+echo "‎ ‎‎تزيد سرعة تدريب القوات بشكل ملحوظ";
+break;
+case 4:
+echo "تزيد قوت المبانئ 4 مرات أمـآم المقاليع";
+break;
+case 5:
+echo "زيادة سعة المخابأ. والمقالع المهاجمة على القرية او القرى التابعة لها التحفة لا تستطيع تحديد هدف للظرب (يكون القصف عشوائي).
+";
+break;
+case 6:
+echo "بناء المخازن الكبيره";
+break;
+}
+?></span>
+</td>
+</tr>
+<tr>
+<th>اللاعب</th>
+<td>
+<a href="profile.php?uid=<?php echo $show['player_id']; ?>"><?php echo $show['player_name']; ?></a>
+</td>
+</tr>
+<tr>
+<th>التحالف</th>
+<td><?php if ($show['alliance_name'] != '') { ?> <a href="alliance.php?id=<?php echo $show['alliance_id']; ?>"><?php echo $show['alliance_name']; ?></a><?php } else {echo "-";} ?></td>
+</tr>
+<tr>
+<th>القرية</th>
+<td>
+<a href="map.php?id=<?php echo $show['id']; ?>"><?php echo $show['village_name']; ?></a>
+</td>
+</tr>
+<tr>
+<th>التأثير</th>
+<td><span class="b">50%</span></td>
+</tr>
+<tr>
+<th>مستوى الخزنة</th>
+<td><b>10</b></td>
+</tr>
+</tbody>
+</table>
+</div>
+<?php
+}
+}
+} else 
+if ( $this->selectedTabIndex == 0 )
+{
+
+?>
+<table cellspacing="1" cellpadding="1" id="near">
+	<thead>
+		<tr>
+			<th colspan="5">التحف الموجودة</th>
+		</tr>
+		<tr>
+			<td></td>
+			<td>الاسم</td>
+			<td>اللاعب</td>
+			<td>التحالف</td>
+			<td>المسافة</td>
+		</tr>
+	</thead>
+	<tbody>
+<?php 
+$n = false;
+//$result = $q->provider->fetchResultSet("select alliance_id,player_name,player_id,id,alliance_name,artefacts,rel_y,rel_x from  p_villages where is_artefacts=1");
+$m = new BuildModel ();
+$result = $m->getArtList();
+while ($result->next()) {
+
+$maps = ceil(WebHelper::getdistance($this->data['rel_x'], $this->data['rel_y'], $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']));
+$n = TRUE;
+?>
+		<tr>
+			<td class="icon"><img title="" alt="" src="core-s/st-s/x.gif" class="artefact_icon_<?php 
+if ($result->row['type'] == 1) {
+echo "fool";
+}else {
+switch ($result->row['artefacts']) {
+case 1:
+echo "2";
+break;
+case 2:
+echo "5";
+break;
+case 3:
+echo "8";
+break;
+case 4:
+echo "10";
+break;
+case 5:
+echo "9";
+break;
+}
+}
+ ?>"></td>
+			<td class="nam"><a href="build.php?id=<?php echo $this->buildingIndex; ?>&show=<?php echo $result->row['id']; ?>"><?php $e = $result->row['artefacts'];
+if ($result->row['type'] == 1) {
+echo "تحفة الجوكر";
+}else {
+switch ($e) {
+case 1:
+echo "قوات سريعه";
+break;
+case 2:
+echo "الكشاف الماهر";
+break;
+case 3:
+echo "‎ بناء قوات سريعه";
+break;
+case 4:
+echo "المهندس المعماري";
+break;
+case 5:
+echo "مخبأ الكبير";
+break;
+case 6:
+echo "بناء المخازن الكبيره";
+break;
+}
+}
+?></a><div class="info"><div class="info">الخزنة <b>10</b>, التأثير <b><span class="none f9">50%</span></b></div></div></td>
+			<td><a href="profile.php?uid=<?php echo $result->row['player_id']; ?>"><?php echo $result->row['player_name']; ?></a></td>
+			<td><?php if ($result->row['alliance_name'] == '') {echo "-";}else { ?> <a href="alliance.php?id=<?php echo $result->row['alliance_id']; ?>"><?php echo $result->row['alliance_name']; } ?></a></td>
+			<td><?php echo $maps; ?></td>
+		</tr>
+<?php
+}
+if (!$n) {
+?>
+<tr><td class="name" colspan="5"><center><span class="none">لا يوجد تحف</span></center></td>
+</tr>
+<?php 
+} 
+?>
+</tr></tbody>
+</table>
+
+<?php
+} else if ( $this->selectedTabIndex == 1 )
+{
+?><table id="villages" cellpadding="1" cellspacing="1">
+	<thead>
+		<tr>
+			<th colspan="3">التحف الخاصة بي</th>
+		</tr>
+		<tr>
+			<td></td>
+			<td>نوع التحفة</td>
+			<td>القرية</td>
+		</tr>
+	</thead>
+	<tbody>
+<?php 
+$n = false;
+$result = $q->provider->fetchResultSet("select * from  p_villages where is_artefacts= 1 AND player_id='".$this->player->playerId."'");
+while ($result->next ())
+{
+$n = TRUE;
+?>
+		<tr>
+			<td class="icon"><img title="" alt="" src="core-s/st-s/x.gif" class="artefact_icon_<?php 
+if ($result->row['type'] == 1) {
+echo "fool";
+}else {
+switch ($result->row['artefacts']) {
+case 1:
+echo "4";
+break;
+case 2:
+echo "5";
+break;
+case 3:
+echo "8";
+break;
+case 4:
+echo "10";
+break;
+case 5:
+echo "9";
+break;
+}
+}
+ ?>"></td>
+
+
+			<td class="nam"><a href="build.php?id=<?php echo $this->buildingIndex; ?>&show=<?php echo $result->row['id']; ?>"><?php $e = $result->row['artefacts'];
+if ($result->row['type'] == 1) {
+echo "تحفة الجوكر";
+}else {
+switch ($e) {
+case 1:
+echo "قوات سريعه";
+break;
+case 2:
+echo "الكشاف الماهر";
+break;
+case 3:
+echo "‎ بناء قوات سريعه";
+break;
+case 4:
+echo "المهندس المعماري";
+break;
+case 5:
+echo "مخبأ الكبير";
+break;
+case 6:
+echo "بناء المخازن الكبيره";
+break;
+}
+}
+?></a></td>
+			<td><a href="village3.php?id=<?php echo $result->row['id']; ?>"><?php echo $result->row['village_name']; ?></a></td>
+		</tr>
+<?php
+}
+if (!$n) {
+?>
+<tr><td class="name" colspan="3"><center><span class="none">انت لا تملك اي تحفة</span></center></td>
+</tr>
+<?php 
+} 
+?>
+</tbody>
+</table>
+<?php
+}
+?>

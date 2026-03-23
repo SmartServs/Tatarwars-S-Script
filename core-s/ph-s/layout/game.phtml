@@ -1,0 +1,437 @@
+<!-- <html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+</head>
+<body>
+<div class="nav-mob">
+
+<a  href="https://game.molvp.net/#"><img class="img-fluid" style="width:30px" src="core-s/st-s/images/mobile/m.svg" alt="MsgAdmin"></a>
+
+<a  href="https://game.molvp.net/#"><img class="img-fluid" style="width:30px" src="core-s/st-s/images/mobile/privacy.png" alt="MsgAdmin" ></a>
+
+<a  href="https://game.molvp.net/#"><img class="img-fluid" style="width:30px" src="core-s/st-s/images/mobile/rule.png" alt="profile" ></a>
+
+<a  href="https://game.molvp.net/#"><img class="img-fluid" style="width:30px" src="core-s/st-s/images/mobile/home.png" alt="off" ></a>
+
+</div>   -->
+
+
+      <!-- icon menu mobile -->
+
+                <div class="nav-mob">
+                    
+                    
+                    <a  href="chat.php"><img class="img-fluid" style="width:30px" src="core-s/st-s/indxnew/mobile/chat.svg" alt="MsgAdmin"></a>
+
+                    <a  href="support.php"><img class="img-fluid" style="width:30px" src="core-s/st-s/indxnew/mobile/customer-service.svg" alt="MsgAdmin" ></a>
+
+                    <a  href="profile.php"><img class="img-fluid" style="width:30px" src="core-s/st-s/indxnew/mobile/user.svg" alt="profile" ></a>
+
+                    <a  href="index.php"><img class="img-fluid" style="width:30px" src="core-s/st-s/indxnew/mobile/home.png" alt="off" ></a>
+					
+					<a  href=""><img class="img-fluid" style="width:30px" src="core-s/st-s/x.gif" alt="off" ></a>
+					
+					<a  href="logout.php"><img class="img-fluid" style="width:30px; color:red;" src="core-s/st-s/indxnew/mobile/power-button.svg" alt="MsgAdmin"></a>
+
+
+                </div>
+
+                <!-- menu -->
+                  <div class="molvp-protection">    
+                <?php
+                 echo "<p>";
+                                $postfix = 0 < $this->dataGame['protection_remain_sec'] ? "" : "d";
+                if ($postfix == "d") {
+                echo "";
+                }else {
+                echo "ستنتهي حمايتك في ";
+                echo "<b><span id=\"timer1\">";
+                echo WebHelper::secondsToString($this->dataGame['protection_remain_sec']);
+                echo "</span></b>";
+                echo "</a> ساعه";
+                }
+                
+                
+                ?>
+                </div>  
+                
+
+
+
+
+
+<?php
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+echo '<html><head>';
+echo '<title>'. $this->appConfig['page']["ar_title"] .'</title>';
+echo '<meta http-equiv="cache-control" content="max-age=0" />';
+echo '<meta http-equiv="pragma" content="no-cache" />';
+echo '<meta http-equiv="expires" content="0" />';
+echo '<meta http-equiv="imagetoolbar" content="no" />';
+echo '<meta http-equiv="content-type" content="text/html; charset=UTF-8" />';
+echo '<meta content="'. $this->appConfig['page']["ar_description"] .'" name="description">';
+echo '<meta content="'. $this->appConfig['page']["ar_keywords"] .'" name="keywords">';
+echo '<link href="core-s/st-s/default/lang/ar/lang.css'. $this->getAssetVersion() .'" rel="stylesheet" type="text/css" />';
+echo '<link href="core-s/st-s/default/lang/ar/compact.css'. $this->getAssetVersion() .'" rel="stylesheet" type="text/css" />';
+// echo '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" >';
+if($this->data['gpack'] != ''){
+echo '<link href="'; echo $this->data['gpack']; echo'/travian.css" rel="stylesheet" type="text/css" /> ';
+echo '<link href="'; echo $this->data['gpack']; echo'/lang/sy/lang.css" rel="stylesheet" type="text/css" />';
+}
+
+echo '<meta name="google-site-verification" content="vTjsRxnpRzHRJvw5E3uOiAA-jcGayHNOw_SEAD93-fc" />';
+echo '<link rel="shortcut icon" href="core-s/st-s/favicon.ico" type="image/x-icon" />';
+echo '<script type="text/javascript">var d3l=';
+echo $this->appConfig['system']['lang'] == "ar" ? "180" : "-600";
+echo '</script>';
+
+echo '<script src="core-s/st-s/core.js'. $this->getAssetVersion() .'" type="text/javascript"></script>';
+echo '</head>';
+echo '<body class="v35 webkit">';
+
+echo '<div class="wrapper">';
+echo '<img src="core-s/st-s/x.gif" id="msfilter" alt="" />';
+echo '<div id="dynamic_header"></div>';
+
+  
+   
+
+
+
+
+echo '<div id="header">';
+echo '<div id="mtop">';
+
+
+
+if($this->player != NULL){
+echo '<a href="village1.php" id="n1" accesskey="1">';
+echo '<img src="core-s/st-s/x.gif" title="'.LANGUI_GAME_ICO1.'" alt="'.LANGUI_GAME_ICO1.'" /></a>
+<a href="village2.php" id="n2" accesskey="2"><img src="core-s/st-s/x.gif" title="'.LANGUI_GAME_ICO2.'" alt="'.LANGUI_GAME_ICO2.'" /></a>
+<a href="map.php" id="n3" accesskey="3"><img src="core-s/st-s/x.gif" title="'.LANGUI_GAME_ICO3.'" alt="'.LANGUI_GAME_ICO3.'" /></a>
+<a href="statistics.php" id="n4" accesskey="4"><img src="core-s/st-s/x.gif" title="'.LANGUI_GAME_ICO4.'" alt="'.LANGUI_GAME_ICO4.'" /></a>
+<div id="n5" class="i'.$this->reportMessageStatus.'">';
+echo '<a class="messages" href="msg.php" accesskey="6" style="position: relative;">';
+
+if ($this->data['new_mail_count'] != 0)
+{
+echo '<span style="padding: 3px 5px; background: #D80000; border-radius:4px; color: #FFF; font-size: 11px;top: 3px;position: absolute; top: 9px; left: 5px;">'.$this->data['new_mail_count'].'</span>';
+}
+echo '<img src="core-s/st-s/x.gif" class="r" title="الرسائل" alt="الرسائل">
+</a>';
+
+echo '<a class="reports" href="report.php" accesskey="5" style="position: relative;">';
+if ($this->data['new_report_count'] != 0)
+{
+echo '<span style="padding: 3px 5px; background: #D80000; border-radius:4px; color: #FFF; font-size: 11px;top: 3px;position: absolute; top: 9px; left: 5px;">'.$this->data['new_report_count'].'</span>';
+}
+echo '<img src="core-s/st-s/x.gif" class="l" title="التقارير" alt="التقارير">
+</a>';
+
+
+
+
+
+
+
+echo '</div>';
+    echo "<a href=\"plus.php?t=2\" id=\"plus\">";
+    if ( $this->data['active_plus_account'] )
+    {
+echo '<img src="core-s/st-s/x.gif" id="btn_plus" class="active" title="';
+echo LANGUI_GAME_ICO7;
+    } else {
+echo '<img src="core-s/st-s/x.gif" id="btn_plus" class="inactive" title="';
+echo LANGUI_GAME_ICO8;
+}
+echo "<div class=\"gold-molvp\">";
+echo "<b><font color='orange'> ";
+echo ''.$this->data['gold_num'].'';
+echo "</b></font> ";
+
+}
+
+echo '<div class="clear"></div>
+</div>
+</div>
+<div id="mid">
+<div id="side_navi" >
+<a id="logo" href="#"><img src="core-s/st-s/x.gif" alt="'.LANGUI_GAME_GNAME.'" /></a>';
+
+if($this->player != NULL){
+$a = date( "G" );
+$_d = $a;
+echo (6 <= $_d && $_d <= 19)?'<img class="time_of_day day" title="'.LANGUI_GAME_MORNING.'" alt="'.LANGUI_GAME_MORNING.'" src="core-s/st-s/x.gif" />':'<img class="time_of_day night" title="'.LANGUI_GAME_AFTERNOON.'" alt="'.LANGUI_GAME_AFTERNOON.'" src="core-s/st-s/x.gif" />';
+}
+require_once(MODEL_PATH."index.php");
+$m1 = new IndexModel();
+$this->datastats = $m1->getIndexSummary();
+$m1->dispose( );
+echo "<br><p><a href=\"index.php\">";echo LANGUI_GAME_MENU1;echo "</a>";
+if($this->player != NULL){echo "
+<a href=\"#\" onclick=\"return showManual(0,0);\">";echo LANGUI_GAME_MENU2;echo "</a>
+<a href=\"profile.php\">"; echo LANGUI_GAME_MENU3;echo "</a>";
+echo '<a href="support.php"><b><font style="color: blue">الدعم</b></a></font>';
+echo '<a href="chat.php"><font style="color: black">الشات</a></font>';
+echo "<a href=\"logout.php\">"; echo LANGUI_GAME_MENU4; echo "</a>
+</p>
+<p>";
+	if ( $this->data['active_plus_account'] )
+    {
+	?>
+	
+        <p>
+		<a href="notes.php"><font color="#FF6F0F"><?php echo LANGUI_GAME_MENU5;?></font></a>
+		<a href="profile.php?links"><font color="#FF6F0F"><?php echo LANGUI_GAME_MENU6;?></font></a>
+		</p>
+			<?php	
+    }
+
+if ( $this->data['player_type'] == PLAYERTYPE_ADMIN ) {// && isset($_GET[$this->appConfig['system']['adming']])){
+
+?>
+
+<?php
+}
+?>
+<p>
+<a href="plus.php?t=2 ">رصيد <b><font color="#71D000">ب</font><font color="#FF6F0F">ل</font><font color="#71D000">ا</font><font color="#FF6F0F">س</font></b></a>
+</p>
+<p>
+</p>
+<?php
+}
+echo "<p>";
+                $postfix = 0 < $this->dataGame['protection_remain_sec'] ? "" : "d";
+if ($postfix == "d") {
+echo "";
+}else {
+echo "ستنتهي حمايتك في ";
+echo "<b><span id=\"timer1\">";
+echo WebHelper::secondsToString($this->dataGame['protection_remain_sec']);
+echo "</span></b>";
+echo "</a> ساعه";
+}
+
+if($this->player != NULL && $this->isPlayerInDeletionProgress()){
+    echo "<p class=\"deltimer\"><a href=\"profile.php?t=2\">";
+    echo LANGUI_GAME_PLAYERDEL;
+    echo " ";
+    echo "<span id=\"timer1\">";echo $this->getPlayerDeletionTime();echo "</span>";
+    echo time_hour_lang;
+    echo "</a></p>";
+}
+echo " </div></b>
+<div id=\"content\" class=\"";echo $this->contentCssClass;echo "\"><div class=\"top\"></div>";$this->printContent();echo "</div>
+<div id=\"side_info\">";
+{
+    echo " <div id=\"anm\" style=\"width:118px; height:142px; visibility: hidden;\"></div>
+";
+}
+if ( $this->player != NULL )
+{
+echo "<table cellpadding=\"1\" cellspacing=\"1\" id=\"vlist\">";
+echo "<thead>";
+echo "<tr>";
+echo "<td colspan=\"3\">";
+echo "<img src=\"core-s/st-s/x.gif\"";
+echo "class=\"tSwitch dynamic_img opened\"";
+echo "alt=\"\" /></a>&nbsp;<a href=\"village4.php\" accesskey=\"9\">".LANGUI_GAME_LMENU2.":</a></td>";
+echo "</tr>";
+echo "</thead>";
+echo "<tbody >";
+        foreach ( $this->playerVillages as $vid => $pvillage )
+        {
+            echo "\t\t\t<tr>\r\n\t\t\t\t<td class=\"dot";
+            if ( $vid == $this->data['selected_village_id'] )
+            {
+                echo "  hl";
+            }
+echo "\">&bull;</td>";
+            echo "<td class=\"link\"><div><a href=\"?vid=";
+            echo $vid.$this->villagesLinkPostfix;
+            echo "\">";
+			echo $pvillage[2];
+            echo "</a></div></td>";
+
+?>
+<td><a href="v2v.php?id=<?php echo $vid.$this->villagesLinkPostfix; ?>"><img src="core-s/st-s/x.gif" class="att_all"></a></td>
+<td><a href="build.php?bid=17&vid2=<?php echo $vid.$this->villagesLinkPostfix; ?>"><img src="core-s/st-s/x.gif" class="r4"></a></td>
+<?php 
+
+echo "<td class=\"aligned_coords\"><div class=\"cox\">(";
+            echo $pvillage[0];
+            echo "</div><div class=\"pi\">|</div><div class=\"coy\">";
+            echo $pvillage[1];
+            echo ")</div> ";
+$vid = $vid.$this->villagesLinkPostfix;
+$t11 = new GlobalModel();
+$war = $t11->getattack($vid,13,$vid,14);
+        if(0 < $war)
+{
+echo '<img src="core-s/st-s/x.gif" class="att1" alt="القوات المهاجمة القادمة" title="هناك '.$war.' هجمات قادمة اليك"> ';
+echo '<b><font color="red">» '.$war.'</font></b>';
+}else {
+//if ($vid != $this->data['selected_village_id']) {
+//}
+}
+echo "</td>\r\n\t\t\t</tr>\r\n\t\t";
+}
+echo "</tbody></table>";
+
+    echo "\t";
+    if ( sizeof( $this->playerLinks ) && $this->data['active_plus_account'] )
+    {
+echo "<table cellpadding=\"1\" cellspacing=\"1\" id=\"llist\">";
+echo "<thead>";
+echo "<tr>";
+echo "<td colspan=\"3\">";
+echo "<img src=\"core-s/st-s/x.gif\"";
+echo "class=\"tSwitch dynamic_img opened\"";
+echo "alt=\"\" /></a>&nbsp;<a href=\"profile.php?links\" accesskey=\"9\">".LANGUI_GAME_LMENU3.":</a></td>";
+echo "</tr>";
+echo "</thead>";
+echo "<tbody >";
+        foreach ( $this->playerLinks as $link )
+        {
+            echo "\t\t\t<tr>\r\n\t\t\t\t<td class=\"dot\">●</td>\r\n\t\t\t\t<td class=\"link\"><div><a href=\"";
+            echo htmlspecialchars( $link['linkHref'] );
+            echo "\"";
+            if ( !$link['linkSelfTarget'] )
+            {
+                echo " target=\"_blank\"";
+            }
+            echo ">";
+            echo $link['linkName'];
+            echo "</a>";
+            if ( !$link['linkSelfTarget'] )
+            {
+                echo " <img class=\"external\" src=\"core-s/st-s/x.gif\" alt=\"";
+                echo LANGUI_GAME_LMENU4;
+                echo "\" title=\"";
+                echo LANGUI_GAME_LMENU4;
+                echo "\">";
+            }
+            echo "</div></td>\r\n\t\t\t</tr>\r\n\t\t\t";
+        }
+        echo "\t\t</tbody>\r\n\t</table>\r\n\t";
+    }
+}
+if ( $this->player != NULL )
+{
+
+    echo " <div align=\"center\" style=\"position: absolute; left: ";
+    echo $this->appConfig['system']['lang'] == "en" ? "1000" : "-850";
+    echo "px; top: 35px;\">";
+
+    echo "</div>";
+}
+echo " </div>
+<div class=\"clear\"></div>
+</div>
+
+<div class=\"footer-stopper\"></div>
+<div class=\"clear\"></div>
+<div id=\"footer\">
+<div id=\"mfoot\">
+<div class=\"footer-menu\">";
+require( VIEW_PATH."layout/footer.phtml" );
+echo "</div>
+</div>
+<div id=\"cfoot\"></div>
+</div>
+</div>
+";
+
+if ( $this->player != NULL )
+{
+
+?> 
+
+        <div id="res"> 
+            <div id="resWrap"> 
+                <table class="table" cellpadding="1" cellspacing="1"> 
+                    <tbody> 
+                        <tr class="res"> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="warehouse img-fluid" alt="المخزن" title="المخزن" /> 
+                            </td> 
+                            <td id="warehouse" class="res" title="السعه التخزينيه الحالية"><?php echo $this->resources[1]['store_max_limit']; ?></td> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="r1 img-fluid" alt="خشب" title="خشب" /> 
+                            </td> 
+                            <td id="l4" class="res" alt="51000" title="<?php echo $this->resources[1]['calc_prod_rate']; ?>"><?php echo $this->resources[1]['current_value']; ?></td> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="r2 img-fluid" alt="طين" title="طين" /> 
+                            </td> 
+                            <td id="l3" class="res" title="<?php echo $this->resources[2]['calc_prod_rate']; ?>"><?php echo $this->resources[2]['current_value']; ?></td> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="r3 img-fluid" alt="حديد" title="حديد" /> 
+                            </td> 
+                            <td id="l2" class="res" title="<?php echo $this->resources[3]['calc_prod_rate']; ?>"><?php echo $this->resources[3]['current_value']; ?></td> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="granary img-fluid" alt="مخزن الحبوب" title="مخزن الحبوب" /> 
+                            </td> 
+                            <td id="granary" class="res" title="السعه التخزينيه الحالية"><?php echo $this->resources[4]['store_max_limit']; ?></td> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="r4 img-fluid" alt="قمح" title="قمح" /> 
+                            </td> 
+                            <td id="l1" class="res" title="<?php echo $this->resources[4]['calc_prod_rate']; ?>"><?php echo $this->resources[4]['current_value']; ?></td> 
+                            <td> 
+                                <img  src="core-s/st-s/x.gif" class="r5 img-fluid" alt="استهلاك القمح" title="استهلاك القمح <?php         echo $this->data['crop_consumption']; 
+        echo "/"; 
+        echo $this->data['crop_consumption'] + $this->resources[4]['calc_prod_rate']; 
+ ?> 
+" /> 
+                            </td> 
+                        </tr> 
+                    </tbody> 
+                </table> 
+            </div> 
+        </div> 
+
+<?php    
+$sec = explode( " ", microtime( ) );
+$usec = explode( " ", microtime( ) );
+list( $usec, $sec ) = $usec;
+echo "<div id=\"stime\">
+<div id=\"ltime\"><div id=\"ltimeWrap\">";
+echo LANGUI_GAME_CALCMS;
+echo " <b>";
+echo ceil( ( ( double )$sec + ( double )$usec - $GLOBALS['__scriptStart'] ) * 1000 );
+echo "</b> نقطه زمنيه<br />";
+echo LANGUI_GAME_SRVTIME;
+echo " ";
+$day = date ("D");
+if ($day == 'Sat') {
+$ar = "السبت";
+}else if ($day == 'Sun') {
+$ar = "الاحد";
+}else if ($day == 'Mon'){
+$ar = "الاثنين";
+}else if ($day == 'Tue'){
+$ar = "الثلاثاء";
+}else if ($day == 'Wed'){
+$ar = "الاربعاء";
+}else if ($day == 'Thu'){
+$ar = "الخميس";
+}else if ($day == 'Fri'){
+$ar = "الجمعه";
+}
+echo "<span id=\"timer2\" class=\"b\">";
+echo $_d;
+echo date( ":i:s" );
+ echo "</span><br>";
+echo "<p>"; echo $ar;  echo " (";  echo date("Y/m/d"); echo ") "; 
+echo "</div></div>\r\n</div>\r\n";
+}
+?>
+<div id="ce"></div>
+<script type="text/javascript">init();</script>
+</body>
+<!-- 
+</body>
+</html>  -->

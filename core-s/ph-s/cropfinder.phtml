@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php 
+if ($this->data['goldclub'] != 1) {
+?>
+<div style="text-aligne:center;padding:20px;">
+<b>البحث عن قمحيات متضمن في نادي الذهب، ولا يلزمك دفع المزيد من المصاريف. </b><br><br>
+<a href="plus.php?t=2#goldclub">» عضوية في نادي الذهب</a>
+</div>
+<?php
+}else {
+?>
+<form id="cropfinder_form" action="cropfinder.php" method="post">
+<div class="cropfinder_input">
+		<div class="row">
+			<span class="cropfinder_head">موقع البداية :</span>
+<span>X</span><input class="text" maxlength="4" value="<?php if (isset($_POST['y'])) {echo $_POST['y']; } else {echo $this->data['rel_y']; } ?>" name="y">
+<span>Y</span><input class="text" maxlength="4" value="<?php if (isset($_POST['x'])) {echo $_POST['x']; } else {echo $this->data['rel_x']; } ?>" name="x">
+		</div>
+	    <div class="row">
+			<span class="cropfinder_head">النوع :</span>
+	    	<input type="radio" value="9" <?php if($_POST['get'] == 9) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 9 حقول
+			&nbsp;<input type="radio" value="15" <?php if($_POST['get'] == 15) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 15 حقل
+	    </div>
+		<div class="row">
+	    	<span class="cropfinder_head">الغير محتلة:</span>
+	    	<input type="checkbox" value="1" name="only_free" class="check" <?php if($_POST['only_free'] == 1) { print 'checked="checked"'; } ?>> اظهار الغير محتلة فقط
+	    </div>
+	    <p class="btn">
+			<input type="image" value="search" id="btn_search" class="dynamic_img " name="suchen" src="core-s/st-s/x.gif">
+		</p>
+		<div class="clear"></div>
+	</div></form><?php 
+$playerid = $this->data['selected_village_id'];
+if( strip_tags($_POST['get'] == "9") && is_numeric($_POST['y']) && is_numeric($_POST['x'])){
+$ys = addslashes($_POST['y']);
+$xs= addslashes($_POST['x']);
+if ($_POST['only_free'] == 1) {
+$result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id='1' and tribe_id='0'");
+$resultx['rel_x'] = $xs;
+$resultx['rel_y'] = $ys;
+}else {
+$result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=1");
+$resultx['rel_x'] = $xs;
+$resultx['rel_y'] = $ys;
+}
+echo "<table id=\"croplist\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th colspan=\"5\">القرى القمحية</th>\n";
+echo "</tr>\n";
+echo "<tr>\n";
+echo "<td>الاحداثيات</td>\n";
+echo "<td>النوع</td>\n";
+echo "<td>اللاعب</td>\n";
+echo "<td>محتلة</td>\n";
+echo "<td>المسافة</td>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+while ($result->next ())
+  {
+
+  $distance = WebHelper::getDistance($resultx['rel_x'], $resultx['rel_y'], $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
+
+  $rows[$distance] = $result->row;
+ 
+  }
+  ksort($rows);
+$s = 0;
+  foreach($rows as $distance => $result->row) {
+$s++;
+if ($s == 20) {
+break;
+}
+ ?>
+<tr>
+<td class="aligned_coords center"><a href="village3.php?id=<?php echo $result->row['id'];?>"><div class="cox">(<?php echo $result->row['rel_x'];?></div><div class="pi"> | </div><div class="coy"><?php echo $result->row['rel_y'];?>)</div></a></td>
+<td class="dist center">9 حقول</td>
+                        <td class="owned"><?php if ( $result->row['player_name'] == "" ){  echo "-"; }else { echo '<a href="profile.php?uid='.$result->row['player_id'].'">'; echo $result->row['player_name']; echo '</a>'; } ?></td>
+<td class="dist center">
+<?php
+if ( $result->row['player_name'] == "" ){
+echo "<b style=\"color:green;\">غير محتلة</b>\n";
+ }else {
+echo "<b style=\"color:red;\">محتلة</b>\n";
+}
+?>
+</td>
+<td class="dist center"><?php echo round(WebHelper::getdistance($this->data['rel_x'], $this->data['rel_y'], $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
+</tr>
+  <?php
+  }
+echo "</table>";
+
+}
+if( strip_tags($_POST['get'] == "15") && is_numeric($_POST['y']) && is_numeric($_POST['x'])){
+$ys = addslashes($_POST['y']);
+$xs= addslashes($_POST['x']);
+$player_id = '1';
+if ($_POST['only_free'] == 1) {
+$result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=6 and tribe_id='0'");
+$resultx['rel_x'] = $xs;
+$resultx['rel_y'] = $ys;
+}else {
+$result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=6");
+$resultx['rel_x'] = $xs;
+$resultx['rel_y'] = $ys;
+}
+
+echo "<table id=\"croplist\" cellspacing=\"1\" cellpadding=\"1\">\n";
+echo "<thead>\n";
+echo "<tr>\n";
+echo "<th colspan=\"5\">القرى القمحية</th>\n";
+echo "</tr>\n";
+echo "<tr>\n";
+echo "<td>الاحداثيات</td>\n";
+echo "<td>النوع</td>\n";
+echo "<td>اللاعب</td>\n";
+echo "<td>محتلة</td>\n";
+echo "<td>المسافة</td>\n";
+echo "</tr>\n";
+echo "</thead>\n";
+echo "<tbody>\n";
+while ($result->next ())
+  {
+
+  $distance = WebHelper::getDistance($resultx['rel_x'], $resultx['rel_y'], $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
+
+  $rows[$distance] = $result->row;
+ 
+  }
+  ksort($rows);
+$s = 0;
+  foreach($rows as $distance => $result->row) {
+$s++;
+if ($s == 20) {
+break;
+}
+ ?>
+<tr>
+<td class="aligned_coords center"><a href="village3.php?id=<?php echo $result->row['id'];?>"><div class="cox">(<?php echo $result->row['rel_x'];?></div><div class="pi"> | </div><div class="coy"><?php echo $result->row['rel_y'];?>)</div></a></td>
+<td class="dist center">15 حقل</td>
+                        <td class="owned"><?php if ( $result->row['player_name'] == "" ){  echo "-"; }else { echo '<a href="profile.php?uid='.$result->row['player_id'].'">'; echo $result->row['player_name']; echo '</a>'; } ?></td>
+<td class="dist center">
+<?php
+if ( $result->row['player_name'] == "" ){
+echo "<b style=\"color:green;\">غير محتلة</b>\n";
+ }else {
+echo "<b style=\"color:red;\">محتلة</b>\n";
+}
+?>
+</td>
+<td class="dist center"><?php echo round(WebHelper::getdistance($this->data['rel_x'], $this->data['rel_y'], $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
+</tr>
+  <?php
+  }
+echo "</table>";
+}
+}
+?>
+</body>
+</html>

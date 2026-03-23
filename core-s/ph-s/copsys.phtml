@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<style>
+  /* Add styles for the button */
+  .custom-button {
+    background-color: #00c853;
+    color: white;
+    padding: 12px 24px;
+    font-size: 20px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    outline: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* Add styles for the button when hovered over */
+  .custom-button:hover {
+    background-color: #4B0082;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Add styles for the button when clicked */
+  .custom-button:active {
+    box-shadow: none;
+    transform: translateY(2px);
+  }
+
+  /* Add styles for the button when disabled */
+  .custom-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+    /* Add styles for the hyperlink */
+  .custom-link {
+    color: #4B0082;
+    text-decoration: none;
+    border-bottom: 2px solid #4B0082;
+    transition: all 0.2s ease-in-out;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Add styles for the hyperlink when hovered over */
+  .custom-link:hover {
+    color: #00c853;
+    border-bottom-color: #00c853;
+  }
+
+  /* Add styles for the hyperlink when clicked */
+  .custom-link:active {
+    color: #4B0082;
+    border-bottom-color: #4B0082;
+  }
+
+  
+</style>
+<?php
+
+$idpl = 1;
+
+if ($this->player->playerId == $idpl )
+{
+
+
+?><br>
+<form action="copsys.php" method="post"><center>
+<font color="blue"><b>عزيزي مدير لعبة صراع الوحوش من فضلك الضغط على الزر أدناه لاظهار جميع الكوبونات بأسماء اللاعبين الذين قاموا بشحنها في الجولة<b></font>
+<br><br><input class="custom-button" type="submit" name="submit" value="أظهر كوبونات اللاعبين" >&nbsp; &nbsp; <a class="custom-link" href="plus?copon" target="_blank">انشاء مجموعة جديدة</a>
+</center>
+</form><br><br>
+<?php
+if (isset($_POST['submit'])) {
+    
+
+echo "<table border='1'>
+<tr>
+<td><font color='green' size='3'><b><center>كوبونات الذهب المشحونة من قبل جميع اللاعبين</center></b></td>
+</tr>";
+echo '<ul>';
+include('./core-s/conf-s/tcex-con.php');
+$db_connect = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword'])or die("1");
+mysql_select_db($AppConfig['db']['webdatabase'], $db_connect);
+
+		$select = mysql_query("SELECT * FROM money_log");
+
+		$select1 = mysql_query("SELECT * FROM copon");
+
+// Retrieve the number of rows from MySQL
+$num_rows = mysql_num_rows($select);
+$num_rows1 = mysql_num_rows($select1);
+
+// Output the HTML table structure
+echo "<table>";
+echo "<thead>";
+echo "<tr>";
+echo "<th>رمز الكوبون</th>";
+echo "<th>إسم اللاعب</th>";
+echo "<th>الذهب المشحون</th>";
+echo "</tr>";
+echo "</thead>";
+echo "<tbody>";
+
+// Loop through the results and output the table rows
+if ($num_rows > 0) {
+  while ($row = mysql_fetch_array($select)) {
+    echo "<tr>";
+    if ($row['transID'] != NULL || $row['transID'] != ''){
+      echo "<td>" . $row['transID'] . "</td>";
+      echo "<td>" . $row['usernam'] . "</td>";
+      echo "<td>" . $row['golds'] . " <img src='core-s/st-s/gold.gif'></td>";
+    } else {
+      echo "<td colspan='3'><font color='red'><b>أكواد الكوبونات المسجلة اما فارغة او غير صحيحة في قاعدة البيانات</b></font></td>";
+    }
+    echo "</tr>";
+  }
+} else {
+  echo "<tr>";
+  echo "<td colspan='3'><center><font color='red'><b>عذرًا لايوجد أي كوبونات تم شحنها حتى اللحظة عاود التحقق في وقت لاحق :)</b></font></center></td>";
+  echo "</tr>";
+}
+
+// Close the HTML table
+echo "</tbody>";
+echo "</table>";
+
+
+// Output the HTML table structure
+echo "<br><br><table>";
+echo "<thead>";
+echo "<tr>";
+echo "<th>الذهب الغير مشحون</th>";
+echo "<th>رمز الكوبون الجديد</th>";
+echo "</tr>";
+echo "</thead>";
+echo "<tbody>";
+
+// Loop through the results and output the table rows
+if ($num_rows1 > 0) {
+  while ($row1 = mysql_fetch_array($select1)) {
+    echo "<tr>";
+    if ($row1['name'] != NULL || $row1['name'] != ''){
+      echo "<td>" . $row1['gold'] . " <img src='core-s/st-s/gold.gif'></td>";
+      echo "<td>" . $row1['name'] . "</td>";
+    } else {
+      echo "<td colspan='2'><font color='red'><b>أكواد الكوبونات المسجلة اما فارغة او غير صحيحة في قاعدة البيانات</b></font></td>";
+    }
+    echo "</tr>";
+  }
+} else {
+  echo "<tr>";
+echo "<td colspan='2'><center><font color='red'><b>عذرًا لايوجد كوبونات جديدة لم يتم شحنها بعد</b></font></center></td>";
+echo "</tr>";
+}
+
+// Close the HTML table
+echo "</tbody>";
+echo "</table>";
+
+}
+
+
+
+    
+
+
+echo '<br><a href="village1.php">قم بالرجوع للقرية</a>';
+}
+
+else {
+    echo"عذرًا هذه الصفحة مخصصة لمدير اللعبة فقط ! تم تسجيل عنوان الآيبي الخاص بك ... قم بتسجيل الخروج من هذه الصفحة او سيتم حظرك من خلال النظام تلقائيًا";
+}
+?>
+</body>
+</html>

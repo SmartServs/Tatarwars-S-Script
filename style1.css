@@ -1,0 +1,157 @@
+/* messag_box */
+.success {
+    width: 400px;
+    padding:10px;
+    cursor: pointer;
+    background-color: #EFFFB9;
+    border: 1px solid #99C600;
+    color: #3C5A01;
+}
+.success p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/success.png") no-repeat scroll right center;
+}
+.warning {
+    width: 400px;
+    padding:10px;
+    cursor: pointer;
+    border: 1px solid #FFC237;
+    background-color: #FFEAA8;
+    color: #826200;
+}
+.warning p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/warning.png") no-repeat scroll right center;
+}
+.error {
+    width: 400px;
+    padding:10px;
+    cursor: pointer;
+    border: 1px solid #EB5339;
+    background-color: #FCCAC2;
+    color: #826200;
+}
+.error p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/error.png") no-repeat scroll right center;
+}
+.information {
+    width: 400px;
+    padding:10px;
+    cursor: pointer;
+    border: 1px solid #418ACC;
+    background-color: #D0E4F4;
+    color: #826200;
+}
+.information p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/info.gif") no-repeat scroll right center;
+}
+#success-x {
+    width: 400px;
+    padding:10px;
+    cursor: default;
+    background-color: #EFFFB9;
+    border: 1px solid #99C600;
+    color: #3C5A01;
+}
+#success-x p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/success.png") no-repeat scroll right center;
+}
+#success-x span{
+    margin: -10px 0 0 -5px;
+    float: left;
+    text-align: right;
+    font-size: 12px;
+    clear: both;
+    cursor: pointer;
+    color: #3C5A01;
+}
+#warning-x {
+    width: 400px;
+    padding:10px;
+    cursor: default;
+    border: 1px solid #FFC237;
+    background-color: #FFEAA8;
+    color: #826200;
+}
+#warning-x p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/warning.png") no-repeat scroll right center;
+}
+#warning-x span{
+    margin: -10px 0 0 -5px;
+    float: left;
+    text-align: right;
+    font-size: 12px;
+    clear: both;
+    cursor: pointer;
+    color: #3C5A01;
+}
+#error-x {
+    width: 400px;
+    padding:10px;
+    cursor: default;
+    border: 1px solid #EB5339;
+    background-color: #FCCAC2;
+    color: #826200;
+}
+#error-x p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/error.png") no-repeat scroll right center;
+}
+#error-x span{
+    margin: -10px 0 0 -5px;
+    float: left;
+    text-align: right;
+    font-size: 12px;
+    clear: both;
+    cursor: pointer;
+    color: #3C5A01;
+}
+#information-x {
+    width: 400px;
+    padding:10px;
+    cursor: default;
+    border: 1px solid #418ACC;
+    background-color: #D0E4F4;
+    color: #826200;
+}
+#information-x p {
+    font-size: 12px;
+    font-family: Tahoma;
+    text-align:right;
+    padding: 0 20px;
+    background: url("image/info.gif") no-repeat scroll right center;
+}
+#information-x span{
+    margin: -10px 0 0 -5px;
+    float: left;
+    text-align: right;
+    font-size: 12px;
+    clear: both;
+    cursor: pointer;
+    color: #3C5A01;
+}

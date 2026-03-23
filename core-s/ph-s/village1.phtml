@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+ 
+
+<script src="core-s/st-s/jquary2.js" type="text/javascript"></script><script src="core-s/st-s/care2.js" type="text/javascript"></script></head><style>
+
+.nextlvl {
+	margin: 6px 0;
+	display: none;
+}
+.resinfo {
+	margin-top: 6px;
+	line-height: 16px;
+	display: none;
+}
+.resinfo span {
+	margin: 4px 6px;
+	display: none;
+}
+
+@media screen and (max-width: 200px) {
+    div.map div#map table#map_infobox {
+        top: -21px;
+        left: 20px;
+    }
+    div.map div#map {
+        width: 463px;
+        height: 380px;
+        top: -20px;
+        right: -28px;
+/* display: contents; */
+    }
+    div#build {
+        width: 397px;
+    }
+    div#village_map{
+        right:-25px;
+    }
+}
+@media screen and (max-width: 600px) {
+    div.map div#map table#map_infobox {
+        top: -21px;
+        left: 20px;
+    }
+    div.map div#map {
+        width: 463px;
+        height: 380px;
+        top: -20px;
+        right: -28px;
+
+    }
+    div#build {
+        width: 397px;
+    }
+    div#village_map{
+        right:-25px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    div.map div#map table#map_infobox {
+        top: -21px;
+        left: 20px;
+    }
+    div.map div#map {
+        width: 463px;
+        height: 380px;
+        top: -20px;
+        right: -28px;
+
+    }
+    div#build {
+        width: 397px;
+    }
+    div#village_map{
+        right:-9px;
+    }
+}
+
+</style>
+<style>
+@media screen and (max-width: 900px){
+    #side_info {
+    position: absolute!important;
+    width: 100%!important;
+    display: block!important;
+    top: 75%;
+}
+table#vlist {
+    padding: 16px 16px 16px 16px;
+}
+}
+</style>
+
+<script type="text/javascript">
+$(function(){
+	$(".tooltip2").hover(function(e){
+		var titleText=$(this).attr('title');
+		if (titleText){
+		$(this).data('tiptext',titleText).removeAttr('title');$('<p class="tooltip"></p>').html(titleText).appendTo('body').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px').fadeIn('slow');
+	
+	}},
+	function(){
+		$(this).attr('title',$(this).data('tiptext'));
+		$('.tooltip').remove();
+	}).mousemove(function(e){$('.tooltip').css('top',(e.pageY+4)+'px').css('left',(e.pageX-20)+'px');});});
+$(function(){
+	$("#rx > area").hover(function(e){
+		var titleText=$(this).attr('title');
+		$(this).data('tiptext',titleText).removeAttr('title');
+		$('<p class="tooltip"></p>').html(titleText).appendTo('body').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px').fadeIn('slow');
+	},function(){
+		$(this).attr('title',$(this).data('tiptext'));
+		$('.tooltip').remove();}).mousemove(
+		function(e){
+			$('.tooltip').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px');
+		});
+});
+$(function(){
+	$("#map2 > area").hover(function(e){
+		var titleText=$(this).attr('title');
+		$(this).data('tiptext',titleText).removeAttr('title');
+		$('<p class="tooltip"></p>').html(titleText).appendTo('body').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px').fadeIn('slow');
+	},function(){
+		$(this).attr('title',$(this).data('tiptext'));
+		$('.tooltip').remove();}).mousemove(
+		function(e){
+			$('.tooltip').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px');
+		});
+});
+$(function(){
+	$("#map_overlay > area").hover(function(e){
+		var titleText=$(this).attr('title');
+		$(this).data('tiptext',titleText).removeAttr('title');
+		$('<p class="tooltip"></p>').html(titleText).appendTo('body').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px').fadeIn('slow');
+	},function(){
+		$(this).attr('title',$(this).data('tiptext'));
+		$('.tooltip').remove();}).mousemove(
+		function(e){
+			$('.tooltip').css('top',(e.pageY+4)+'px').css('left',(e.pageX-20)+'px');
+		});
+});
+$(function(){
+	$("#map_overlay_large > area").hover(function(e){
+		var titleText=$(this).attr('title');
+		$(this).data('tiptext',titleText).removeAttr('title');
+		$('<p class="tooltip"></p>').html(titleText).appendTo('body').css('top',(e.pageY+4)+'px').css('left',(e.pageX-92)+'px').fadeIn('slow');
+	},function(){
+		$(this).attr('title',$(this).data('tiptext'));
+		$('.tooltip').remove();}).mousemove(
+		function(e){
+			$('.tooltip').css('top',(e.pageY+4)+'px').css('left',(e.pageX-20)+'px');
+		});
+});
+</script>
+<?php
+
+	echo "<h1>";
+	echo $this->data['village_name'];
+	echo "<br>";
+	if($this->data['is_capital'])
+    {
+    echo '<font color="#D80000" size="1">(العاصمة)</font>';
+    }
+
+  if ($this->data['allegiance_percent'] < 100) {
+      echo "<div id=\"loyality\" class=\"";
+      echo $this->data['allegiance_percent'] <= 60 ? "re" : "gr";
+      echo "\">";
+      echo LANGUI_VIL1_T1;
+      echo " ";
+      echo $this->data['allegiance_percent'];
+      echo "%</div>";
+  }
+$b1 = "build.php?id=1";
+$b2 = "build.php?id=2";
+$b3 = "build.php?id=3";
+$b4 = "build.php?id=4";
+$b5 = "build.php?id=5";
+$b6 = "build.php?id=6";
+$b7 = "build.php?id=7";
+$b8 = "build.php?id=8";
+$b9 = "build.php?id=9";
+$b10 = "build.php?id=10";
+$b11 = "build.php?id=11";
+$b12 = "build.php?id=12";
+$b13 = "build.php?id=13";
+$b14 = "build.php?id=14";
+$b15 = "build.php?id=15";
+$b16 = "build.php?id=16";
+$b17 = "build.php?id=17";
+$b18 = "build.php?id=18";
+/*}*/
+  echo "</h1>\r\r<map name=\"rx\" id=\"rx\">\r<area href=\"".$b1."\" coords=\"101,33,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b2."\" coords=\"165,32,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b3."\" coords=\"224,46,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b4."\" coords=\"46,63,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b5."\" coords=\"138,74,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b6."\" coords=\"203,94,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b7."\" coords=\"262,86,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b8."\" coords=\"31,117,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b9."\" coords=\"83,110,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b10."\" coords=\"214,142,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b11."\" coords=\"269,146,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b12."\" coords=\"42,171,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b13."\" coords=\"93,164,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b14."\" coords=\"160,184,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b15."\" coords=\"239,199,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b16."\" coords=\"87,217,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b17."\" coords=\"140,231,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"".$b18."\" coords=\"190,232,28\" shape=\"circle\" ";
+  echo ">\r<area href=\"village2.php\" coords=\"144,131,36\" shape=\"circle\" ";
+  echo LANGUI_VIL1_T2;
+  echo "\" alt=\"";
+  echo LANGUI_VIL1_T2;
+  echo "\">\r</map>\r\r<div id=\"village_map\" class=\"f";
+  echo $this->data['field_maps_id'];
+  echo "\">\r";
+  foreach ($this->buildings as $id => $build) {
+      if (19 <= $id) {
+          break;
+      }
+      if (0 < $build['level']) {
+          echo "<img src=\"core-s/st-s/x.gif\" class=\"reslevel rf" . $id . " level" . $build['level'] . "\" alt=\"" . $this->getBuildingName($id) . "\">";
+      }
+  }
+  echo "<img id=\"resfeld\" usemap=\"#rx\" src=\"core-s/st-s/x.gif\" alt=\"\">\r</div>\r\r<div id=\"map_details\">\r\t";
+  if (0 < $this->queueModel->tasksInQueue['war_troops_summary']['total_number']) {
+      echo "\t<table id=\"movements\" cellpadding=\"1\" cellspacing=\"1\">\r\t\t<thead><tr><th colspan=\"3\">";
+      echo LANGUI_VIL1_T3;
+      echo ":</th></tr></thead>\r\t\t<tbody>\r\t\t\t";
+      $war = $this->queueModel->tasksInQueue['war_troops_summary']['to_me']['attacks'];
+      if (0 < $war['number']) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"typ\"><a href=\"build.php?id=39\"><img src=\"core-s/st-s/x.gif\" class=\"att1\" alt=\"";
+          echo LANGUI_VIL1_T4;
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T4;
+          echo "\"></a>";
+          echo "<s";
+          echo "pan class=\"a1\">»</span></td>\r\t\t\t\t<td><div class=\"mov\">";
+          echo "<s";
+          echo "pan class=\"a1\">";
+          echo $war['number'];
+          echo "&nbsp;";
+          echo LANGUI_VIL1_T5;
+          echo "</span></div><div class=\"dur_r\">";
+          echo text_in_lang;
+          echo "&nbsp;";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($war['min_time']);
+          echo "</span>&nbsp;";
+          echo time_hour_lang;
+          echo "</div></td>\r\t\t\t</tr>\r\t\t\t";
+      }
+      echo "\t\t\t";
+      $war = $this->queueModel->tasksInQueue['war_troops_summary']['to_me']['reinforce'];
+      if (0 < $war['number']) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"typ\"><a href=\"build.php?id=39\"><img src=\"core-s/st-s/x.gif\" class=\"def1\" alt=\"";
+          echo LANGUI_VIL1_T6;
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T6;
+          echo "\"></a>";
+          echo "<s";
+          echo "pan class=\"d1\">»</span></td>\r\t\t\t\t<td><div class=\"mov\">";
+          echo "<s";
+          echo "pan class=\"d1\">";
+          echo $war['number'];
+          echo "&nbsp;";
+          echo LANGUI_VIL1_T7;
+          echo "</span></div><div class=\"dur_r\">";
+          echo text_in_lang;
+          echo "&nbsp;";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($war['min_time']);
+          echo "</span>&nbsp;";
+          echo time_hour_lang;
+          echo "</div></td>\r\t\t\t</tr>\r\t\t\t";
+      }
+      echo "\r\t\t\t";
+      $war = $this->queueModel->tasksInQueue['war_troops_summary']['from_me']['attacks'];
+      if (0 < $war['number']) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"typ\"><a href=\"build.php?id=39\"><img src=\"core-s/st-s/x.gif\" class=\"att2\" alt=\"";
+          echo LANGUI_VIL1_T8;
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T8;
+          echo "\"></a>";
+          echo "<s";
+          echo "pan class=\"a2\">«</span></td>\r\t\t\t\t<td><div class=\"mov\">";
+          echo "<s";
+          echo "pan class=\"a2\">";
+          echo $war['number'];
+          echo "&nbsp;";
+          echo LANGUI_VIL1_T5;
+          echo "</span></div><div class=\"dur_r\">";
+          echo text_in_lang;
+          echo "&nbsp;";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($war['min_time']);
+          echo "</span>&nbsp;";
+          echo time_hour_lang;
+          echo "</div></td>\r\t\t\t</tr>\r\t\t\t";
+      }
+      echo "\t\t\t";
+      $war = $this->queueModel->tasksInQueue['war_troops_summary']['from_me']['reinforce'];
+      if (0 < $war['number']) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"typ\"><a href=\"build.php?id=39\"><img src=\"core-s/st-s/x.gif\" class=\"def2\" alt=\"";
+          echo LANGUI_VIL1_T9;
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T9;
+          echo "\"></a>";
+          echo "<s";
+          echo "pan class=\"d2\">«</span></td>\r\t\t\t\t<td><div class=\"mov\">";
+          echo "<s";
+          echo "pan class=\"d2\">";
+          echo $war['number'];
+          echo "&nbsp;";
+          echo LANGUI_VIL1_T7;
+          echo "</span></div><div class=\"dur_r\">";
+          echo text_in_lang;
+          echo "&nbsp;";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($war['min_time']);
+          echo "</span>&nbsp;";
+          echo time_hour_lang;
+          echo "</div></td>\r\t\t\t</tr>\r\t\t\t";
+      }
+      echo "\t\t\t\r\t\t\t";
+      $war = $this->queueModel->tasksInQueue['war_troops_summary']['to_my_oasis']['attacks'];
+      if (0 < $war['number']) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"typ\"><a href=\"build.php?id=39\"><img src=\"core-s/st-s/x.gif\" class=\"att3\" alt=\"";
+          echo LANGUI_VIL1_T10;
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T10;
+          echo "\"></a>";
+          echo "<s";
+          echo "pan class=\"a3\">»</span></td>\r\t\t\t\t<td><div class=\"mov\">";
+          echo "<s";
+          echo "pan class=\"a3\">";
+          echo $war['number'];
+
+          echo "&nbsp;";
+          echo LANGUI_VIL1_T5;
+          echo "</span></div><div class=\"dur_r\">";
+          echo text_in_lang;
+          echo "&nbsp;";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($war['min_time']);
+          echo "</span>&nbsp;";
+          echo time_hour_lang;
+          echo "</div></td>\r\t\t\t</tr>\r\t\t\t";
+      }
+      echo "\t\t\t";
+      $war = $this->queueModel->tasksInQueue['war_troops_summary']['to_my_oasis']['reinforce'];
+      if (0 < $war['number']) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"typ\"><a href=\"build.php?id=39\"><img src=\"core-s/st-s/x.gif\" class=\"def3\" alt=\"";
+          echo LANGUI_VIL1_T11;
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T11;
+          echo "\"></a>";
+          echo "<s";
+          echo "pan class=\"d3\">»</span></td>\r\t\t\t\t<td><div class=\"mov\">";
+          echo "<s";
+          echo "pan class=\"d3\">";
+          echo $war['number'];
+          echo "&nbsp;";
+          echo LANGUI_VIL1_T7;
+          echo "</span></div><div class=\"dur_r\">";
+          echo text_in_lang;
+          echo "&nbsp;";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($war['min_time']);
+          echo "</span>&nbsp;";
+          echo time_hour_lang;
+          echo "</div></td>\r\t\t\t</tr>\r\t\t\t";
+      }
+      echo "\t\t</tbody>\r\t</table>\r\t";
+  }
+$neededTime1 = $this->getNeededTime (1,$this->resources[1]['store_max_limit']);
+$a1 = '' . (0 < $neededTime1 ? 'سيمتلئ المخزن بعد ' . WebHelper::secondstostring ($neededTime1) . ' ' . time_hour_lang : "المخزن ممتلئ") . '';
+$neededTime2 = $this->getNeededTime (2,$this->resources[2]['store_max_limit']);
+$a2 = '' . (0 < $neededTime2 ? 'سيمتلئ المخزن بعد ' . WebHelper::secondstostring ($neededTime2) . ' ' . time_hour_lang : "المخزن ممتلئ") . '';
+$neededTime3 = $this->getNeededTime (3,$this->resources[3]['store_max_limit']);
+$a3 = '' . (0 < $neededTime3 ? 'سيمتلئ المخزن بعد ' . WebHelper::secondstostring ($neededTime3) . ' ' . time_hour_lang : "المخزن ممتلئ") . '';
+$neededTime4 = $this->getNeededTime (4,$this->resources[4]['store_max_limit']);
+$a4 = '' . (0 < $neededTime4 ? 'سيمتلئ المخزن بعد ' . WebHelper::secondstostring ($neededTime4) . ' ' . time_hour_lang : "المخزن ممتلئ") . '';
+ echo "\r\t<table id=\"production\" style='margin-bottom:6px;' cellpadding=\"1\" cellspacing=\"1\">\r\t\t<thead>\r\t\t\t<tr><th colspan=\"4\">";
+  echo LANGUI_VIL1_T12;
+  echo ":</th></tr>\r\t\t</thead>\r\t\t<tbody>\t\r\t\t\t<tr>\r\t\t\t\t<td class=\"ico\"><img class=\"r1\" src=\"core-s/st-s/x.gif\" alt=\"";
+  echo item_title_1;
+  echo "\" title=\"";
+  echo item_title_1;
+  echo "\"></td>\r\t\t\t\t<td title='".$a1."' class=\"res\">";
+  echo item_title_1;
+  echo ':</td><td class="num" title="'.$a1.'">';
+  echo $this->resources[1]['calc_prod_rate'];
+  echo "</td>\r\t\t\t\t<td title='".$a1."' class=\"per\">";
+  echo LANGUI_VIL1_T13;
+  echo "</td>\r\t\t\t</tr>\r\t\t\t<tr>\r\t\t\t\t<td class=\"ico\" title='".$a2."'><img class=\"r2\" src=\"core-s/st-s/x.gif\" alt=\"";
+  echo item_title_2;
+  echo "\" title=\"";
+  echo item_title_2;
+  echo "\"></td>\r\t\t\t\t<td class=\"res\" title='".$a2."'>";
+  echo item_title_2;
+  echo ":</td>\r\t\t\t\t<td class=\"num\" title='".$a2."'>";
+  echo $this->resources[2]['calc_prod_rate'];
+  echo "</td>\r\t\t\t\t<td class=\"per\" title='".$a2."'>";
+  echo LANGUI_VIL1_T13;
+  echo "</td>\r\t\t\t</tr>\t\t\t\t\r\t\t\t<tr>\r\t\t\t\t<td class=\"ico\"><img class=\"r3\" src=\"core-s/st-s/x.gif\" alt=\"";
+  echo item_title_3;
+  echo "\" title=\"";
+  echo item_title_3;
+  echo "\"></td>\r\t\t\t\t<td class=\"res\" title='".$a3."'>";
+  echo item_title_3;
+  echo ":</td>\r\t\t\t\t<td class=\"num\" title='".$a3."'>";
+  echo $this->resources[3]['calc_prod_rate'];
+  echo "</td>\r\t\t\t\t<td title='".$a3."' class=\"per\">";
+  echo LANGUI_VIL1_T13;
+  echo "</td>\r\t\t\t</tr>\t\r\t\t\t<tr>\r\t\t\t\t<td class=\"ico\"><img class=\"r4\" src=\"core-s/st-s/x.gif\" alt=\"";
+  echo item_title_4;
+  echo "\" title=\"";
+  echo item_title_4;
+  echo "\"></td>\r\t\t\t\t<td title='".$a4."' class=\"res\">";
+  echo item_title_4;
+  echo ":</td>\r\t\t\t\t<td class=\"num\" title='".$a4."'>";
+  echo $this->resources[4]['calc_prod_rate'];
+  echo "</td>\r\t\t\t\t<td class=\"per\" title='".$a4."'>";
+  echo LANGUI_VIL1_T13;
+  echo "</td></tr>";
+  echo "</tbody></table>";
+ echo "<table id=\"troops\" cellpadding=\"1\" cellspacing=\"1\">\r\t\t<thead>\r\t\t\t<tr><th colspan=\"3\">";
+  echo LANGUI_VIL1_T14;
+  echo ": ";
+//if ($GLOBALS['AppConfig']['Game']['soq'] == 1) {
+//$link = 'build.php?bid=42&vid2=7201&t=4';
+//} else {
+//$link = 'plus.php';
+//}
+//echo '<img src="core-s/st-s/x.gif" class="gold" alt="ذهب" title="ذهب"> <a href="'.$link.'">شراء المزيد</a>';
+
+  echo "</th></tr>\r\t\t</thead>\r\t\t<tbody>\r";
+  if ($this->heroCount == 0 && sizeof($this->troops) == 0) {
+      echo "\t\t\t<tr><td>";
+      echo LANGUI_VIL1_T15;
+      echo "</td></tr>\r";
+  } else {
+      if (0 < $this->heroCount) {
+          echo "\t\t\t<tr>\r\t\t\t\t<td class=\"ico\"><a href=\"build.php?id=39\"><img class=\"unit uhero\" src=\"core-s/st-s/x.gif\" alt=\"";
+          echo troop_hero;
+          echo "\" title=\"";
+          echo troop_hero;
+          echo "\"></a></td>\r\t\t\t\t<td class=\"num\">";
+          echo $this->heroCount;
+          echo "</td>\r\t\t\t\t<td class=\"un\">";
+          echo troop_hero;
+echo "(".$this->data['hero_name'].")";
+          echo "</td>\r\t\t\t</tr>\r";
+      }
+      foreach ($this->troops as $k => $v) {
+          $troopName = htmlspecialchars(constant("troop_" . $k));
+          echo "   <div id='area' >\t\t\t<tr>\r\t\t\t\t<td class=\"ico\"><a href=\"build.php?id=39\"><img class=\"unit u";
+          echo $k;
+          echo "\" src=\"core-s/st-s/x.gif\" alt=\"";
+          echo $troopName;
+          echo "\" title=\"";
+          echo $troopName;
+          echo "\"></a></td>\r\t\t\t\t<td class=\"num\">";
+          echo $v;
+          echo "</td>\r\t\t\t\t<td class=\"un\">";
+          echo $troopName;
+          echo "</td>\r\t\t\t</tr></div>\r";
+      }
+  }
+  echo "\t\t</tbody>\r\t</table>\r</div>\r";
+  if (isset($this->queueModel->tasksInQueue[QS_BUILD_CREATEUPGRADE])) {
+      echo "<table cellpadding=\"1\" cellspacing=\"1\" id=\"building_contract\">\r\t<thead>\r\t\t<tr>\r\t\t\t<th colspan=\"3\">\r\t\t\t\t";
+      echo LANGUI_VIL1_T16;
+      echo ": \r\t\t\t\t";
+      if (!$this->data['is_special_village'] && $this->gameMetadata['plusTable'][5]['cost'] <= $this->data['gold_num']) {
+          echo "<a href=\"village1.php?bfs&k=";
+          echo $this->data['update_key'];
+          echo "\" title=\"";
+          echo LANGUI_VIL1_T18;
+          echo "\"><img class=\"clock\" alt=\"";
+          echo LANGUI_VIL1_T18;
+          echo "\" src=\"core-s/st-s/x.gif\"></a>";
+      }
+      echo "\t\t\t</th>\r\t\t</tr>\r\t</thead>\r\t<tbody>\r\t\t";
+      $tmpBuilding = array();
+      foreach ($this->queueModel->tasksInQueue[QS_BUILD_CREATEUPGRADE] as $qtask) {
+          $index  = $qtask['proc_params'];
+          $itemId = $qtask['building_id'];
+          if (!isset($tmpBuilding[$index])) {
+              $tmpBuilding[$index] = 0;
+          }
+          ++$tmpBuilding[$index];
+          $level = $this->buildings[$index]['level'] + $tmpBuilding[$index];
+          echo "\t\t<tr>\r\t\t\t<td class=\"ico\"><a href=\"?id=";
+          echo $qtask['id'];
+          echo "&d&k=";
+          echo $this->data['update_key'];
+          echo "\"><img src=\"core-s/st-s/x.gif\" class=\"del\" title=\"";
+          echo LANGUI_VIL1_T17;
+          echo "\" alt=\"";
+          echo LANGUI_VIL1_T17;
+          echo "\"></a></td>\r\t\t\t<td>";
+          echo constant("item_" . $itemId);
+          echo " (";
+          echo level_lang;
+          echo " ";
+          echo $level;
+          echo ")</td>\r\t\t\t<td>";
+          echo time_remain_lang;
+          echo " ";
+          echo "<s";
+          echo "pan id=\"timer1\">";
+          echo WebHelper::secondstostring($qtask['remainingSeconds']);
+          echo "</span> ";
+          echo time_hour_lang;
+          echo "</td>\r\t\t</tr>\r\t\t";
+      }
+      unset($tmpBuilding);
+      echo "\t</tbody>\r</table>\r";
+  }
+if ($this->data['is_special_village'] == 1 ) {
+include( APP_PATH.'queuet.php' );
+}
+?>
+<style>
+    @media screen and (max-width: 900px){
+    div#mid {
+        zoom: 90%;
+}
+}
+</style>
+</body>
+</html>

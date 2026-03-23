@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+
+echo "<h1>";
+echo text_pnotes_lang;
+echo "</h1>\r\n<form method=\"post\" action=\"notes.php\">\r\n<div id=\"block\">\r\n\t<textarea name=\"notes\" id=\"notice\">";
+echo $this->data['notes'];
+echo "</textarea>\r\n\t<p class=\"btn\">\r\n\t\t<input id=\"btn_save\" type=\"image\" value=\"\" name=\"s1\" src=\"core-s/st-s/x.gif\" class=\"dynamic_img\" alt=\"";
+echo text_save_lang;
+echo "\"><br/>\r\n\t\t";
+if ( $this->saved )
+{
+    echo text_newssaved_lang;
+}
+echo "\t</p>\r\n</div>\r\n</form>";
+?>
+</body>
+</html>

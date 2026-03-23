@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body><?php
+####################################################
+##   s@smartservs.com     &&   BASEL WAEL    ##
+##   admin@smartservs.com    &&   Wael Seif  ##
+##   jokar@smartservs.com    &&   mohamed joker   ##
+####################################################
+if (isset($_GET['terms'])) {
+?>
+<h1>قوانين اللعبة</h1>
+لعبة حرب التتار هى مجرد لعبه للترفيه وتسلية الوقت وليس لاثارة المشاكل بين الناس او الخلافات او الخروج عن الاداب العامه لنا كمسلمين 
+سوف يتم المحاسبه بكل حزم مع كل من يقوم بمخالفة الشروط الاتية:-</h5><p>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> ممنوع تهديد اى لاعب باى اسلوب من الاساليب ومن يقوم بتهديد اى لاعب سوف يتلقى عقوبة حظر 24 ساعة<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> ممنوع الاسائه الى الدين او العرق او اشكال العنصريه ومن يقوم بالسب سوف يتم اتخاذ عقوبة الحظر ضده من 12 ساعه الى 72 ساعه على حسب تقدير الادارة<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> ممنوع نشر او الاشهار لاى مواقع اخرى من خلال موقعنا عن طريق ارسال الرسائل او الكتابه بالوصف ومن يقوم بذلك يتم حظره نهائيا<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> من يقوم باستغلال خطا باللعبه لصالحه ضد اللاعبين وعدم تبليغ الاداره لحل المشكله يتم ايقاف اللاعب من فترة 72 ساعه الى ايقاف دائم على حسب الحالةأو اتخاذ مايراه الصياد مناسبا<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> يتم معاقبة اى لاعب يدعى انه يعمل في الادارة التابعه لحرب التتار بالحظر النهائي<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> تسجيل 1 حساب كحد اقصى ويمنع التعدد في العضويات<br>
+<h3>حقوق كل لاعب :-</h3>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> للاعب الحق في الحصول على دعم مستمر والرد على مشاكله واستفسارته من خلال طاقم الاداة والرد على المشكله في مدة اقصاها 24 ساعه<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> للاعب الحق في الحصول على تعويض ان لحقت به اضرار ناتجه عن اخطاء اللعبه<br>
+<h4>قوانين التعاملات المالية وشراء الذهب :-</h4>
+كما نعرف فانه في حرب التتار يوجد تعاملات مالية وهى شراء الراغب من اللاعبين للذهب الخاص باللعبة لمنحه المزيد من الصلاحيات باللعبة 
+وبما ان هناك تعاملات ماليه لابد من وجود قوانين تحكمها :-<p>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> في حال شراء اللاعب الذهب ولم يصل اليه عليه مراسلة الادارة برقم العمليه الشرائية التى لم تصل اليه حتى يتم التاكد منها من خلال الادارة<<br>
+<img style="margin:auto;" src="core-s/st-s/right_navar.png"> لا يحق للاعب بطلب ارجاع الاموال التى اشترى بها الذهب وقد وصل اليه الذهب بدون مشاكل او خلافات </h5>
+<p>
+يحق للادارة اللعبه بتغير هذه القوانين في اى وقت او الاضافه عليها وبمجرد تسجيلك في موقع حرب التتار سيكون هذا بمثابة الموافقه على هذه القوانين<p>
+
+ادارة الموقع<br>
+<?php
+}else {
+?>
+<center><img src="core-s/st-s/login.gif" style="margin-right: -2%;"></center>
+<h1><img src="core-s/st-s/x.gif" class="" alt="تسجيل الدخول للعبه" /></h1>
+<div align="center">
+</div> <h5><img class="img_u04" src="core-s/st-s/x.gif" alt="التسجيل" /></h5>
+<p><b><?php echo LANGUI_INDX_T3; ?></b></p>
+<?php
+$time = strtotime($this->webgameConfig['system']['server_start']);
+$timenow = time();
+$timenown = ceil(($timenow - $time)/86400);
+require( APP_PATH."conf-s/tcex-con.php" );
+if ( ($this->appConfig['system']['server_start'] > date('Y/m/d H:i:s'))){
+echo "<center><font color='black'><p style='font-size:20px;'>الوقت المتبقى لأنطلاق اللعب : </font><font style='font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;'><span id='timer1'>". TimeAgo(strtotime($this->appConfig['system']['server_start']) - time()) ."</span></font></center>";
+}
+echo '<form action="login.php" method="post" name="login">';
+echo '<table cellpadding="1" cellspacing="1" id="login_form"><tbody>';
+echo '<tr class="top"><th><img src="core-s/st-s/1.png"></th><td><input class="text" maxlength="15" name="name" type="text" title="'. LANGUI_INDX_T1 .'" value="'. $this->name .'"><span class="error">'. $this->err[0] .'</span></td></tr>';
+echo '<tr class="btm"><th><img src="core-s/st-s/2.png"></th><td><input class="text" name="password" type="password" title="'. LANGUI_INDX_T2 .'" value="'. $this->password .'" /><span class="error">'. $this->err[1] .'</span></td></tr>';
+echo '</tbody></table>';
+echo '<p class="btn"><input id="btn_login" class="dynamic_img" type="image" onClick="this.style.visibility="hidden";" alt="????" src="core-s/st-s/x.gif" name="s1" value="register"></p>';
+if ($this->error != "") { echo $this->error; }
+echo '</form>';
+$tatarover = $this->appConfig['Game']['tatarover']-$timenown;
+echo '<table cellpadding="1" cellspacing="1" id="login_form" class="info"><tbody>';
+?>
+<div><br /></div>
+<div><br /></div>
+</head>
+<?php
+?>
+<div class="info">
+<tr>
+    </tr>
+                <th><b>عدد الاعبين :</b></th>
+                        <td><?php echo $this->datastats['players_count']; ?></td>
+                </tr>        
+				<tr>
+                        <th><b>تاريخ بداية السيرفر :</b></th>
+                        <td><?php echo $GLOBALS['AppConfig']['Game']['starxxsmart']; ?></td>
+                </tr>
+				<tr>
+                        <th><b>تاريخ ظهور التتار :</b></th>
+                        <td><?php echo $GLOBALS['AppConfig']['Game']['tatarxxsmart']; ?></td>
+                </tr>
+                      
+
+</div>
+<table cellpadding="1" cellspacing="1" id="login_form" class="info" style="display: none;">
+<?php
+require_once(MODEL_PATH."register.php");
+require_once(MODEL_PATH."index.php");
+$m1 = new RegisterModel();
+$m2 = new IndexModel();
+$this->datastats = $m1->GetGsummaryData();
+$this->datastats1 = $m2->getIndexSummary();
+$timenown = (time()-$this->datastats['server_start_time']);
+?>
+        <tbody>
+
+<?php
+$m1->dispose( );
+?>
+        </tbody>
+</table>
+<?php } ?></body>
+</html>

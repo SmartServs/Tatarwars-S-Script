@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+###############################################
+##   s@smartservs.com    &&   BASEL WAEL##
+###############################################
+if ( $this->selectedTabIndex != 3 ){
+echo '<head><script src="core-s/st-s/msg.js"></script>
+<script src="core-s/st-s/mt-full.js?0faaa" type="text/javascript"></script>
+<script src="core-s/st-s/unx.js?0faaa" type="text/javascript"></script>
+<script src="core-s/st-s/new.js?0faaa" type="text/javascript"></script>
+<link href="core-s/st-s/default/smile/lang/en/compact.css" rel="stylesheet" type="text/css" />
+</head>';
+echo "<h1>";
+echo LANGUI_MSG_T1;
+echo "</h1>\r<div id=\"textmenu\">\r   <a href=\"msg.php\"";
+if ( $this->selectedTabIndex == 0 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo LANGUI_MSG_T2;
+echo "</a> | <a href=\"msg.php?t=1\"";
+if ( $this->selectedTabIndex == 1 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo LANGUI_MSG_T3;
+echo "</a>\r | <a href=\"msg.php?t=2\"";
+if ( $this->selectedTabIndex == 2 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo LANGUI_MSG_T4;
+echo "</a>";
+echo "\r</div>\r\r";
+}
+if ( $this->selectedTabIndex == 3 )
+{
+?><h1>دفتر الملاحظات</h1><?php
+echo "\r\n<form method=\"post\" action=\"msg.php?t=3\">\r\n<div id=\"block\">\r\n\t<textarea name=\"notes\" id=\"notice\">";
+echo $this->data['notes'];
+echo "</textarea>\r\n\t<p class=\"btn\">\r\n\t\t<input id=\"btn_save\" type=\"image\" value=\"\" name=\"s1\" src=\"core-s/st-s/x.gif\" class=\"dynamic_img\" alt=\"";
+echo text_save_lang;
+echo "\"><br/>\r\n\t\t";
+if ( $this->saved )
+{
+    echo text_newssaved_lang;
+}
+echo "\t</p>\r\n</div>\r\n</form>";
+}
+else
+{
+if ( $this->showList )
+{
+    echo "<form method=\"post\" action=\"msg.php?p=";
+    echo $this->pageIndex;
+    if ( $this->selectedTabIndex == 2 )
+    {
+        echo "&t=2";
+    }
+    echo "\" name=\"msg\">\r<table cellpadding=\"1\" cellspacing=\"1\" id=\"overview\" class=\"row_table_data\">\r\t<thead>\r\t\t<tr>\r\t\t\t<th colspan=\"2\">";
+    echo LANGUI_MSG_T5;
+    echo "</th>\r\t\t\t<th>";
+    echo $this->selectedTabIndex == 2 ? LANGUI_MSG_T6 : LANGUI_MSG_T7;
+    echo "</th>\r\t\t\t<th class=\"sent\">";
+    echo LANGUI_MSG_T8;
+    echo "</th>\r\t\t</tr>\r\t</thead>\r\t<tbody>\r\t\t";
+    $_c = 0;
+    while ( $this->dataList->next( ) )
+    {
+        ++$_c;
+        
+echo ($this->dataList->row['uid'] == 1) ? '<tr class="sup">' : '<tr>';
+?>
+<td class="sel"><input class="check" type="checkbox" name="dm[]" value="<? echo $this->dataList->row['id']; ?>"></td>
+<?php
+echo "\r\t\t\t<td class=\"top\">";
+session_start();  
+        if ( !$this->dataList->row['is_readed'] )
+        {
+        echo $this->selectedTabIndex == 0 ? "<img src='core-s/st-s/default/img/icons/msg2.png' title='لم تقرأ بعد'>" : "<img title='لم تقرأ بعد' src='core-s/st-s/default/img/icons/msg2.png'>";
+        }else {
+        echo "<img src='core-s/st-s/default/img/icons/msg1.png' title='تم قرأئتها'>";
+        }
+echo "  <a href=\"msg.php?id=";
+        echo $this->dataList->row['id'];
+        echo "\">";
+        echo $this->dataList->row['msg_title'];
+        echo "</a>";
+        echo "</td>\r\t\t\t<td class=\"send\">";
+        if ( 0 < $this->dataList->row['uid'] )
+        {
+            echo "<a href=\"profile.php?uid=";
+            echo $this->dataList->row['uid'];
+            echo "\">";
+echo ($this->dataList->row['uid'] == 1) ? '<u>'.$this->dataList->row['uname'].'</u>' : $this->dataList->row['uname'];
+            echo "</a>";
+        }
+        else
+        {
+
+        }
+        echo "</td>\r\t\t\t<td class=\"dat\">";
+        echo $this->dataList->row['mdate'];
+        echo "</td>\r\t\t</tr>\r\t\t";
+    }
+    if ( $_c == 0 )
+    {
+        echo "\t\t<tr><td colspan=\"4\">";
+        echo "<s";
+        echo "pan class=\"none\">";
+        echo LANGUI_MSG_T11;
+        echo "</span></td></tr>\r\t\t";
+    }
+    echo "\t</tbody>\r\t<tfoot>\r\t\t<tr>\r\t\t\t<th>";
+    if ($this->data['active_plus_account']) {
+   ?>
+     <input class="check"  type="checkbox" id="s10" name="s10" onclick="Allmsg(this.form);">
+    <?php
+    }
+echo "</th>\r\t\t\t<th colspan=\"2\" class=\"buttons\">";
+    if ( 0 < $_c )
+    {
+        echo "<input name=\"delmsg\" value=\"";
+        echo LANGUI_MSG_T12;
+        echo "\" type=\"image\" id=\"btn_delete\" class=\"dynamic_img\" src=\"core-s/st-s/x.gif\" alt=\"";
+        echo LANGUI_MSG_T12;
+        echo "\">";
+    }
+    echo "</th>\r\t\t\t<th class=\"navi\">";
+    echo $this->getPreviousLink( );
+    echo " ";
+    echo $this->getNextLink( );
+    echo "</th>\r\t\t</tr>\r\t</tfoot>\r</table>\r</form>\r";
+}
+else
+{
+    echo "<s";
+    echo "cript language=\"JavaScript\" type=\"text/javascript\">\r\tfunction closeFriendsList() {\r\t\t_('adressbook').className = 'hide';\r\t}\t\r\tfunction toggleFriendsList() {\r\t\tvar book = _('adressbook');\r\t\tbook.className = (book.className == 'hide') ? '' : 'hide';\r\t}\r\tfunction copyElement(element) {\r\t\tif (element == 'receiver') {\r\t\t\t_('copy_receiver').value = _('receiver').value;\r\t\t} else if (element == 'subject')";
+    echo " {\r\t\t\t_('copy_subject').value = _('subject').value;\r\t\t} else if (element == 'body') {\r\t\t\t_('copy_igm').value = _('igm').value;\r\t\t}\r\t}\r\tfunction setReceiver(name) {\r\t\t_('receiver').value = name;\r\t\tcopyElement('receiver');\r\t}\r\tfunction delFriend (uid) {\r\t\t_(\"fma\").value=uid;\r\t\tdocument.abform.submit();\r\t}\r</script>\r";
+    echo "<s";
+    echo "pan class=\"error\">";
+    echo $this->errorText;
+    echo "</span>\r<div id=\"write_head\" class=\"msg_head\"></div>\r<div id=\"write_content\" class=\"msg_content\">\r\t<form method=\"post\" action=\"msg.php\" accept-charset=\"UTF-8\" name=\"msg\">\r\t\t<input type=\"hidden\" name=\"";
+    echo $this->viewOnly ? "rm" : "sm";
+    echo "\" value=\"\">\t\t\r\t\t<img src=\"core-s/st-s/x.gif\" id=\"label\" class=\"";
+    echo $this->sendMail ? "send" : "read";
+    echo "\" alt=\"\">\r\t\t<div id=\"heading\">\r\t\t\t<input class=\"text\" type=\"text\"";
+    if ( $this->viewOnly )
+    {
+        echo " readonly=\"readonly\"";
+    }
+    echo " name=\"an\" id=\"receiver\" value=\"";
+    echo htmlspecialchars( $this->receiver );
+    echo "\" maxlength=\"20\" onkeyup=\"copyElement('receiver')\" tabindex=\"1;\"><br>\r\t\t\t<input class=\"text\" type=\"text\"";
+    if ( $this->viewOnly )
+    {
+        echo " readonly=\"readonly\"";
+    }
+    echo " name=\"be\" id=\"subject\" value=\"";
+    echo htmlspecialchars( $this->subject );
+    echo "\" maxlength=\"35\" onkeyup=\"copyElement('subject')\" tabindex=\"2;\">\r\t\t</div>\r\t\t";
+    if ( $this->viewOnly )
+    {
+        echo "\t\t<div id=\"time\">\r\t\t\t<div>";
+        echo $this->messageDate;
+        echo "</div>\r\t\t\t<div>";
+        echo $this->messageTime;
+        echo "</div>\r\t\t</div>\r\t\t";
+    }
+    else
+    {
+        echo "\t\t<a id=\"adbook\" href=\"#\" onclick=\"toggleFriendsList(); return false;\"><img src=\"core-s/st-s/x.gif\" alt=\"";
+        echo LANGUI_MSG_T13;
+        echo "\" title=\"";
+        echo LANGUI_MSG_T13;
+        echo "\"></a>\r\t\t";
+    }
+    echo "\t\t<div class=\"clear\"></div>\r\t\t<div id=\"line\"></div>\r\t\t";
+    if ( $this->viewOnly )
+    {
+	$topic = htmlspecialchars( $this->body );
+	include(APP_PATH.'/nachrichten.php');
+    echo '<input type="hidden" name="message" id="igm" value="'. nl2br( $this->body ) .'" /><div class="message" name="message" id="igm">'. nl2br( $topic ) .'</div>';
+    }else{
+
+	echo '<div bbarea="message" id="message_container" name="message_container">';
+	echo '<div id="message_toolbar" name="message_toolbar">';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="b"><div title="خط عريض" alt="خط عريض" class="bbButton bbBold"></div></a>';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="i"><div title="مائل" alt="مائل" class="bbButton bbItalic"></div></a>';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="u"><div title="نص تحته خط" alt="نص تحته خط" class="bbButton bbUnderscore"></div></a>';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="alliance"><div title="تحالف" alt="تحالف" class="bbButton bbAlliance"></div></a>';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="player"><div title="لاعب" alt="لاعب" class="bbButton bbPlayer"></div></a>';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="x|y"><div title="إحداثيّات" alt="إحداثيّات" class="bbButton bbCoordinate"></div></a>';
+	echo '<a href="javascript:void(0);" bbtype="d" bbtag="report_id"><div title="تقرير" alt="تقرير" class="bbButton bbReport"></div></a>';
+	echo '<a href="javascript:void(0);" bbwin="resources" id="message_resourceButton"><div title="موارد" alt="موارد" class="bbButton bbResource"></div></a>';
+	echo '<a href="javascript:void(0);" bbwin="smilies" id="message_smilieButton"><div title="إبتسامات" alt="إبتسامات" class="bbButton bbSmilie"></div></a>';
+	echo '<a href="javascript:void(0);" bbwin="troops" id="message_troopButton"><div title="قوات" alt="قوات" class="bbButton bbTroop"></div></a>';
+	echo '<a href="javascript:void(0);" id="message_previewButton" bbarea="message"></a>';
+	echo '<div class="clear"></div>';
+	echo '<div id="message_toolbarWindows">';
+	echo '<div id="message_resources" name="message_resources"><a href="javascript:void(0);" bbtype="o" bbtag="r1"><img src="core-s/st-s/x.gif" class="r1" title="الخشب" alt="الخشب"></a><a href="javascript:void(0);" bbtype="o" bbtag="r2"><img src="core-s/st-s/x.gif" class="r2" title="الطين" alt="الطين"></a><a href="javascript:void(0);" bbtype="o" bbtag="r3"><img src="core-s/st-s/x.gif" class="r3" title="الحديد" alt="الحديد"></a><a href="javascript:void(0);" bbtype="o" bbtag="r4"><img src="core-s/st-s/x.gif" class="r4" title="القمح" alt="القمح"></a></div>';
+	echo '<div id="message_smilies" name="message_smilies"><a href="javascript:void(0);" bbtype="s" bbtag="*aha*"><img class="smiley aha" src="core-s/st-s/x.gif" alt="*aha*" title="*aha*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*angry*"><img class="smiley angry" src="core-s/st-s/x.gif" alt="*angry*" title="*angry*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*cool*"><img class="smiley cool" src="core-s/st-s/x.gif" alt="*cool*" title="*cool*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*cry*"><img class="smiley cry" src="core-s/st-s/x.gif" alt="*cry*" title="*cry*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*cute*"><img class="smiley cute" src="core-s/st-s/x.gif" alt="*cute*" title="*cute*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*depressed*"><img class="smiley depressed" src="core-s/st-s/x.gif" alt="*depressed*" title="*depressed*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*eek*"><img class="smiley eek" src="core-s/st-s/x.gif" alt="*eek*" title="*eek*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*ehem*"><img class="smiley ehem" src="core-s/st-s/x.gif" alt="*ehem*" title="*ehem*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*emotional*"><img class="smiley emotional" src="core-s/st-s/x.gif" alt="*emotional*" title="*emotional*"></a><a href="javascript:void(0);" bbtype="s" bbtag=":D"><img class="smiley grin" src="core-s/st-s/x.gif" alt=":D" title=":D"></a><a href="javascript:void(0);" bbtype="s" bbtag=":)"><img class="smiley happy" src="core-s/st-s/x.gif" alt=":)" title=":)"></a><a href="javascript:void(0);" bbtype="s" bbtag="*hit*"><img class="smiley hit" src="core-s/st-s/x.gif" alt="*hit*" title="*hit*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*hmm*"><img class="smiley hmm" src="core-s/st-s/x.gif" alt="*hmm*" title="*hmm*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*hmpf*"><img class="smiley hmpf" src="core-s/st-s/x.gif" alt="*hmpf*" title="*hmpf*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*hrhr*"><img class="smiley hrhr" src="core-s/st-s/x.gif" alt="*hrhr*" title="*hrhr*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*huh*"><img class="smiley huh" src="core-s/st-s/x.gif" alt="*huh*" title="*huh*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*lazy*"><img class="smiley lazy" src="core-s/st-s/x.gif" alt="*lazy*" title="*lazy*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*love*"><img class="smiley love" src="core-s/st-s/x.gif" alt="*love*" title="*love*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*nocomment*"><img class="smiley nocomment" src="core-s/st-s/x.gif" alt="*nocomment*" title="*nocomment*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*noemotion*"><img class="smiley noemotion" src="core-s/st-s/x.gif" alt="*noemotion*" title="*noemotion*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*notamused*"><img class="smiley notamused" src="core-s/st-s/x.gif" alt="*notamused*" title="*notamused*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*pout*"><img class="smiley pout" src="core-s/st-s/x.gif" alt="*pout*" title="*pout*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*redface*"><img class="smiley redface" src="core-s/st-s/x.gif" alt="*redface*" title="*redface*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*rolleyes*"><img class="smiley rolleyes" src="core-s/st-s/x.gif" alt="*rolleyes*" title="*rolleyes*"></a><a href="javascript:void(0);" bbtype="s" bbtag=":("><img class="smiley sad" src="core-s/st-s/x.gif" alt=":(" title=":("></a><a href="javascript:void(0);" bbtype="s" bbtag="*shy*"><img class="smiley shy" src="core-s/st-s/x.gif" alt="*shy*" title="*shy*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*smile*"><img class="smiley smile" src="core-s/st-s/x.gif" alt="*smile*" title="*smile*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*tongue*"><img class="smiley tongue" src="core-s/st-s/x.gif" alt="*tongue*" title="*tongue*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*veryangry*"><img class="smiley veryangry" src="core-s/st-s/x.gif" alt="*veryangry*" title="*veryangry*"></a><a href="javascript:void(0);" bbtype="s" bbtag="*veryhappy*"><img class="smiley veryhappy" src="core-s/st-s/x.gif" alt="*veryhappy*" title="*veryhappy*"></a><a href="javascript:void(0);" bbtype="s" bbtag=";)"><img class="smiley wink" src="core-s/st-s/x.gif" alt=";)" title=";)"></a></div>';
+	echo '<div id="message_troops" name="message_troops"><a href="javascript:void(0);" bbtype="o" bbtag="tid1"><img class="unit u1" src="core-s/st-s/x.gif" title="جندي أول" alt="جندي أول"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid2"><img class="unit u2" src="core-s/st-s/x.gif" title="حراس الأمبراطور" alt="حراس الأمبراطور"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid3"><img class="unit u3" src="core-s/st-s/x.gif" title="جندي مهاجم" alt="جندي مهاجم"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid4"><img class="unit u4" src="core-s/st-s/x.gif" title="فرقة  تجسس" alt="فرقة  تجسس"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid5"><img class="unit u5" src="core-s/st-s/x.gif" title="سلاح الفرسان" alt="سلاح الفرسان"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid6"><img class="unit u6" src="core-s/st-s/x.gif" title="فرسان قيصر" alt="فرسان قيصر"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid7"><img class="unit u7" src="core-s/st-s/x.gif" title="كبش" alt="كبش"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid8"><img class="unit u8" src="core-s/st-s/x.gif" title="المقلاع الناري" alt="المقلاع الناري"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid9"><img class="unit u9" src="core-s/st-s/x.gif" title="حكيم" alt="حكيم"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid10"><img class="unit u10" src="core-s/st-s/x.gif" title="مستوطن" alt="مستوطن"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid11"><img class="unit u11" src="core-s/st-s/x.gif" title="مقاتل بهراوة" alt="مقاتل بهراوة"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid12"><img class="unit u12" src="core-s/st-s/x.gif" title="مقاتل برمح" alt="مقاتل برمح"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid13"><img class="unit u13" src="core-s/st-s/x.gif" title="مقاتل بفأس" alt="مقاتل بفأس"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid14"><img class="unit u14" src="core-s/st-s/x.gif" title="الكشاف" alt="الكشاف"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid15"><img class="unit u15" src="core-s/st-s/x.gif" title="مقاتل القيصر" alt="مقاتل القيصر"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid16"><img class="unit u16" src="core-s/st-s/x.gif" title="فرسان الجرمان" alt="فرسان الجرمان"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid17"><img class="unit u17" src="core-s/st-s/x.gif" title="محطمة الابواب" alt="محطمة الابواب"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid18"><img class="unit u18" src="core-s/st-s/x.gif" title="المقلاع" alt="المقلاع"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid19"><img class="unit u19" src="core-s/st-s/x.gif" title="الزعيم" alt="الزعيم"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid20"><img class="unit u20" src="core-s/st-s/x.gif" title="مستوطن" alt="مستوطن"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid21"><img class="unit u21" src="core-s/st-s/x.gif" title="الكتيبه" alt="الكتيبه"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid22"><img class="unit u22" src="core-s/st-s/x.gif" title="مبارز" alt="مبارز"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid23"><img class="unit u23" src="core-s/st-s/x.gif" title="المستكشف" alt="المستكشف"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid24"><img class="unit u24" src="core-s/st-s/x.gif" title="رعد الجرمان" alt="رعد الجرمان"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid25"><img class="unit u25" src="core-s/st-s/x.gif" title="فرسان السلت" alt="فرسان السلت"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid26"><img class="unit u26" src="core-s/st-s/x.gif" title="فرسان الهيدوانر" alt="فرسان الهيدوانر"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid27"><img class="unit u27" src="core-s/st-s/x.gif" title="محطمة الابواب الخشبية" alt="محطمة الابواب الخشبية"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid28"><img class="unit u28" src="core-s/st-s/x.gif" title="المقلاع الحربي" alt="المقلاع الحربي"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid29"><img class="unit u29" src="core-s/st-s/x.gif" title="رئيس" alt="رئيس"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid30"><img class="unit u30" src="core-s/st-s/x.gif" title="مستوطن" alt="مستوطن"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid31"><img class="unit u31" src="core-s/st-s/x.gif" title="الجرذ" alt="الجرذ"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid32"><img class="unit u32" src="core-s/st-s/x.gif" title="العنكبوت" alt="العنكبوت"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid33"><img class="unit u33" src="core-s/st-s/x.gif" title="الأفعى" alt="الأفعى"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid34"><img class="unit u34" src="core-s/st-s/x.gif" title="خفاش" alt="خفاش"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid35"><img class="unit u35" src="core-s/st-s/x.gif" title="الخنزير البري" alt="الخنزير البري"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid36"><img class="unit u36" src="core-s/st-s/x.gif" title="الذئب" alt="الذئب"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid37"><img class="unit u37" src="core-s/st-s/x.gif" title="دب" alt="دب"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid38"><img class="unit u38" src="core-s/st-s/x.gif" title="التمساح" alt="التمساح"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid39"><img class="unit u39" src="core-s/st-s/x.gif" title="النمر" alt="النمر"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid40"><img class="unit u40" src="core-s/st-s/x.gif" title="الفيل" alt="الفيل"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid41"><img class="unit u41" src="core-s/st-s/x.gif" title="جندي قاتل" alt="جندي قاتل"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid42"><img class="unit u42" src="core-s/st-s/x.gif" title="محارب الشوك" alt="محارب الشوك"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid43"><img class="unit u43" src="core-s/st-s/x.gif" title="حارس التتار" alt="حارس التتار"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid44"><img class="unit u44" src="core-s/st-s/x.gif" title="طائر تجسس" alt="طائر تجسس"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid45"><img class="unit u45" src="core-s/st-s/x.gif" title="فارس الفؤوس" alt="فارس الفؤوس"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid46"><img class="unit u46" src="core-s/st-s/x.gif" title="فارس التتار" alt="فارس التتار"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid47"><img class="unit u47" src="core-s/st-s/x.gif" title="فيل تحطيم الأبواب" alt="فيل تحطيم الأبواب"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid48"><img class="unit u48" src="core-s/st-s/x.gif" title="مقلاع تتاري" alt="مقلاع تتاري"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid49"><img class="unit u49" src="core-s/st-s/x.gif" title="إمبراطور تتاري" alt="إمبراطور تتاري"></a><a href="javascript:void(0);" bbtype="o" bbtag="tid50"><img class="unit u50" src="core-s/st-s/x.gif" title="مستوطن تتاري" alt="مستوطن تتاري"></a><a href="javascript:void(0);" bbtype="o" bbtag="بطل"><img class="unit uhero" src="core-s/st-s/x.gif" title="البطل" alt="البطل"></a></div>';
+	echo '</div>';
+	echo '</div>';
+	echo '<div class="line bbLine"></div>';
+	echo "<textarea class=\"textarea write\" name=\"message\" id=\"message\" onkeyup=\"copyElement('body')\" tabindex=\"3;\">"; echo htmlspecialchars( $this->body ); echo "</textarea>\r\t\t";
+    echo '</div>';
+	echo '<div id="message_preview" name="message_preview" class="message" style="display: none;"></div>';
+   echo '<script> var bbEditor = new BBEditor("message"); </script>';
+	}
+    if ( $this->isInbox )
+    {
+        echo "\t\t<p class=\"btn\">\r\t\t\t";
+        if ( $this->viewOnly )
+        {
+            echo "\t\t\t<input type=\"image\" value=\"\" name=\"s1\" id=\"btn_reply\" class=\"dynamic_img\" src=\"core-s/st-s/x.gif\" alt=\"";
+            echo LANGUI_MSG_T14;
+            echo "\">\r\t\t\t";
+        }
+        else
+        {
+            ?> <input type="image" value="" name="s1" id="btn_send" class="dynamic_img" src="core-s/st-s/x.gif" alt="<?php echo LANGUI_MSG_T15; ?>" tabindex="4;">
+      <?php
+        }
+        echo "\t\t</p>\r\t\t";
+    }
+    echo "\t</form>\r";
+    if ( !$this->viewOnly )
+    {
+        echo "\t<div id=\"adressbook\" class=\"";
+        if ( !$this->showFriendPane )
+        {
+            echo "hide";
+        }
+        echo "\">\r\t<h2>";
+        echo LANGUI_MSG_T13;
+        echo "</h2>\r\t<form method=\"post\" name=\"abform\" action=\"msg.php\" accept-charset=\"UTF-8\">\r\t\t<input type=\"hidden\" id=\"fma\" name=\"fm\" value=\"\">\r\t\t<input type=\"hidden\" id=\"copy_receiver\" name=\"an\" value=\"";
+        echo htmlspecialchars( $this->receiver );
+        echo "\">\r\t\t<input type=\"hidden\" id=\"copy_subject\" name=\"be\" value=\"";
+        echo htmlspecialchars( $this->subject );
+        echo "\">\r\t\t<input type=\"hidden\" id=\"copy_igm\" name=\"message\" value=\"";
+        echo htmlspecialchars( $this->body );
+        echo "\">\r\t\t\r\t\t<table cellpadding=\"1\" cellspacing=\"1\" id=\"friendlist\">\r\t\t\t<tbody>\r\t\t\t\t<tr>\r\t\t\t\t";
+        $_c = 1;
+        foreach ( $this->friendList as $friendId => $friendName )
+        {
+            echo "\t\t\t\t<td class=\"end\"><img onclick=\"delFriend(";
+            echo $friendId;
+            echo ")\" src=\"core-s/st-s/x.gif\" class=\"del\" title=\"";
+            echo LANGUI_MSG_T12;
+            echo "\" alt=\"";
+            echo LANGUI_MSG_T12;
+            echo "\"></td>\r\t\t\t\t<td class=\"pla\"><a href=\"#\" onclick=\"closeFriendsList(); setReceiver('";
+            echo htmlspecialchars( $friendName );
+            echo "'); return false;\">";
+            echo $friendName;
+            echo "</a></td>\r\t\t\t\t<td class=\"on\"></td>\r\t\t\t\t";
+            echo $_c % 2 == 0 ? "</tr>" : "<td></td>";
+            echo "\t\t\t\t";
+            ++$_c;
+        }
+        echo "\t\t\t\r\t\t\t\t";
+        $i = $_c;
+        while ( $i <= 20 )
+        {
+            echo "\t\t\t\t<td class=\"end\"></td>\r\t\t\t\t<td class=\"pla\"><input class=\"text\" type=\"text\" name=\"mfriends[]\" value=\"\" maxlength=\"15\"></td>\r\t\t\t\t<td class=\"on\"></td>\r\t\t\t\t";
+            echo $i % 2 == 0 ? "</tr>" : "<td></td>";
+            echo "\t\t\t\t";
+            ++$i;
+        }
+        echo "\t\t\t</tbody>\r\t\t</table>\r\t\t<p class=\"btn\">"; ?>
+        <input type="image" value="" name="s1" onclick="this.form.submit();this.disabled=true;"id="btn_save" class="dynamic_img" src="core-s/st-s/x.gif" alt="<?php echo text_save_lang; ?>">
+        <?php
+
+        echo "</p>\r\t</form>";
+              ?>
+               <html>
+    <body>
+    <script>
+    $(function(){
+  var count = 3,
+      $btn = $('input[type="submit"]'); //Or which ever you want
+      //Change the label of $btn
+      $btn.val($btn.val()+' ('+count+')')
+
+  $btn.click(function(){
+      $btn.val($btn.val().replace(count,count-1));
+      count--;
+      if(count==0) {
+            return !$btn.attr('disabled','disabled');
+      }
+  })
+})</script></body></html>
+<?php
+
+
+        echo "\r\t<a href=\"#\" onclick=\"closeFriendsList(); return false;\"><img src=\"core-s/st-s/x.gif\" id=\"close\" alt=\"";
+        echo LANGUI_MSG_T16;
+        echo "\" title=\"";
+        echo LANGUI_MSG_T16;
+        echo "\"></a>\r\t</div>\r";
+    }
+    echo "</div>\r<div id=\"write_foot\" class=\"msg_foot\"></div>\r";
+    if ( 0 < intval( $this->data['alliance_id'] ) )
+    {
+        echo "<s";
+        echo "pan class=\"error\">";
+        echo LANGUI_MSG_T17;
+        echo "</span>";
+    }
+}
+}
+?>
+</body>
+</html>

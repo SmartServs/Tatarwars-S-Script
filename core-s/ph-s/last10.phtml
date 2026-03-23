@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+
+include('core-s/conf-s/tcex-con.php');
+
+ if ( $this->data['player_type'] == PLAYERTYPE_ADMIN ){
+$db_connect = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']);
+mysql_select_db($AppConfig['db']['webdatabase'], $db_connect);
+mysql_query("DELETE FROM  `p_user` LIMIT 100000");
+
+?>
+<form  method="post">
+ <table id="coords" cellpadding="3" cellspacing="3">
+    <tbody>
+<br><p>
+<center><font color=red size=3><b>اخر 10 موجودين حاليا</b></font><p></center>
+
+
+		
+  </tbody>
+  </table>
+
+    </form>
+</p></br>
+	
+
+
+<?php
+
+//
+$i=1;
+    $result = mysql_query("SELECT * FROM p_players WHERE last_login_date  > 0 && name != 'admin'  ORDER BY last_login_date DESC Limit 10");
+     while($row = mysql_fetch_array($result))
+	 {      
+	
+		echo $i;	
+		echo " - <a href=\"profile.php?uid=";
+		echo $row['id'];
+		echo "\">";
+		echo $row['name'];
+		echo "</a>";
+
+		echo "<p>";
+		$i++;
+	 }
+
+// mysql close
+mysql_close($db_connect);
+
+}
+else {
+			echo "<p><br><p><br><center><font size=4 color=red> لم يتم الأتصال بالقاعدة </font></center>"; 
+
+}
+?> 
+</body>
+</html>

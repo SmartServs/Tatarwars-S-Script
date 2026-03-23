@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+include('core-s/conf-s/tcex-con.php');
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+?>
+
+<?php
+
+if ( $this->data['player_type'] == 2 ) {
+
+
+
+$result = mysql_query("SELECT id,name,last_ip,is_blocked FROM p_players");
+
+
+    echo "<h1>بحث عن اي بي لاعب<h1>";
+    echo "\t\t\t\t\t<tr><td colspan=\"2\" class=\"empty\"></td></tr>\r\n\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t<td colspan=\"2\" class=\"desc2\"><div class=\"desc2div\">";
+    echo "</div></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<table cellpadding=\"1\" cellspacing=\"1\" id=\"villages\">\r\n\t<thead>\r\n\t<tr><th colspan=\"4\">";
+    echo "البحث";
+    echo "</th></tr>\r\n\t<tr>\r\n\t\t<td>";
+    echo "رقم اللاعب";
+    echo "</td>\r\n\t\t<td>";
+    echo "اسم اللاعب";
+    echo "</td>\r\n\t\t<td>";
+    echo "الاي بي";
+    echo "</td>\r\n\t\t<td>";
+    echo "موقوف";
+while($row = mysql_fetch_array($result))
+  {
+  echo "<tr>";
+  echo "<td>" . $row['id'] . "</td>";  
+  echo "<td>" . $row['name'] . "</td>";
+  echo "<td>" . $row['last_ip'] . "</td>";
+  echo "<td>" . $row['is_blocked'] . "</td>";
+  echo "</tr>";
+  }
+echo "</table>";
+
+mysql_close($link);
+
+}
+?>
+</body>
+</html>

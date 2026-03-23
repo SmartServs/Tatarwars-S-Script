@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+
+
+        if ( $this->data['player_type'] != PLAYERTYPE_ADMIN )
+
+        {
+
+            header("Location: index.php");
+
+        }
+
+		else
+
+        {
+
+
+
+?>
+
+<h1><? echo LANGUI_BAY_T10; ?></h1>
+
+<br>
+
+<div id="textmenu">
+
+<a href="payhis.php?t=1"<? if ($_GET['t'] == 1) { echo " class=\"selected\""; }?>>العمليات الشرائية </a> | 
+
+<a href="payhis.php?t=3"<? if ($_GET['t'] == 3) { echo " class=\"selected\""; }?>><? echo LANGUI_BAY_T29; ?> </a></div>
+
+<? if ($_GET['t'] == 3) { $m = new Payhis(); $payhistotal = $m->getTotalMoney(); ?>
+
+<table class="rate_details lang_rtl lang_ar" cellpadding="3" cellspacing="1">
+
+<thead>
+
+<tr><th colspan="2"><? echo LANGUI_BAY_T1;?></th></tr>
+
+</thead>
+
+<tbody>
+
+<tr><td class="pic"><? echo LANGUI_BAY_T2;?></td>
+
+<td class="pic"><? echo $payhistotal['total_gold'];?> <img alt="plus_gold" class="gold" src="core-s/st-s/x.gif" title="plus_gold" /></td>
+
+</tr>
+
+<tr><td class="pic"><? echo LANGUI_BAY_T24;?></td>
+
+<td class="pic"><? echo $payhistotal['total_cashu'];?></td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+<? }
+
+if ($_GET['t'] <= 2){ 
+
+?>
+
+
+
+	<table id="brought_in" cellpadding="3" cellspacing="1">
+
+	<thead>
+
+		<tr>
+
+			<th colspan="5"><? echo LANGUI_BAY_T4;?></th>
+
+		</tr>
+
+		<tr>
+
+			<td><? echo LANGUI_BAY_T5;?></td>
+
+			<td><? echo LANGUI_BAY_T6;?></td>
+
+			<td><? echo LANGUI_BAY_T7;?></td>
+
+			<td><? echo LANGUI_BAY_T8;?></td>
+
+			<td><? echo LANGUI_BAY_T9;?></td>
+
+		</tr>
+
+	</thead>
+
+<? 
+
+$found = false;
+
+while ($this->dataList->next()) {
+
+$m = new Payhis();
+
+$playerName = $this->dataList->row['usernam'];
+
+$userid = $m->getPlayerDataByName($playerName);
+
+$found = true;
+
+?>
+
+	<tr>
+
+	    <td><center><? echo $this->dataList->row['transID'];?></center></td>
+
+		<td><center><a href="profile.php?uid=<?php echo $userid['id'];?>"><?  echo $this->dataList->row['usernam']; ?></a></center></td>
+
+		<td><center><? echo $this->dataList->row['golds'];?></center></td>
+
+		<td><center><? echo $this->dataList->row['money'];?></center></td>
+
+		<td><center><? echo $this->dataList->row['currency'];?></center></td>
+
+	</tr>
+
+<? } 
+
+if (!$found) {
+
+?>
+
+<tr><td class="none" colspan="5"><center><?php echo LANGUI_BAY_T30; ?></center></td></tr>
+
+<?
+
+}?>
+
+</table><?
+
+}
+
+}
+
+?>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+
+echo "<h1>خصائص</h1>\n";
+echo "\r<div id=\"textmenu\">\r   <a href=\"Adsss.php\"";
+if ( $this->selectedTabIndex == 0 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "الاخبار";
+echo "</a>\r | <a href=\"Adsss.php?t=1\"";
+if ( $this->selectedTabIndex == 1 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "خبر جديد\n";
+echo "</a>\n";
+echo "</a>\r | <a href=\"Adsss.php?t=4\"";
+if ( $this->selectedTabIndex == 4 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "مراقبة الذهب\n";
+echo "</a>\n | <a href=\"gga.php\"";
+if ( $this->selectedTabIndex == 7 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "توزيع الذهب";
+echo "</a>\n | <a href='wesaaam.php' ";
+if ( $this->selectedTabIndex == 5 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "توزيع الاوسمة";
+echo "</a>\n | <a href='ips.php' ";
+if ( $this->selectedTabIndex == 5 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "الايبات";
+echo "</a>\n | <a href='last10.php' ";
+if ( $this->selectedTabIndex == 5 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "اخر 10 متواجدون";
+echo "</a>\n | <a href='serverst.php?t=12' ";
+if ( $this->selectedTabIndex == 5 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "رسالة جماعية";
+echo "</a>\n | <a href='Adsss.php?t=7' ";
+if ( $this->selectedTabIndex == 5 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "التصويت";
+echo "</a>\n | <a href='Adsss.php?t=5' ";
+if ( $this->selectedTabIndex == 5 )
+{
+    echo " class=\"selected\"";
+}
+echo ">";
+echo "مشتريات اللعبه</a>";
+echo "\r</div>\r\r";
+if ( $this->selectedTabIndex == 0 )
+{
+echo "\r\n<form method=\"post\" action=\"Adsss.php\">\r\n<div id=\"block\">\r\n\t<textarea name=\"news\" id=\"notice\">";
+echo $this->siteNews;
+echo "</textarea>\r\n\t<p class=\"btn\">\r\n\t\t<input id=\"btn_save\" type=\"image\" value=\"\" name=\"s1\" src=\"core-s/st-s/x.gif\" class=\"dynamic_img\" alt=\"";
+echo text_save_lang;
+echo "\"><br/>\r\n\t\t";
+if ( $this->saved )
+{
+    echo text_newssaved_lang;
+}
+echo "\t</p>\r\n</div>\r\n</form>";
+}
+if ( $this->selectedTabIndex == 1 )
+{
+echo '<font color="orange">* {playerId} رقم العضوية.</font><br>';
+echo '<font color="orange">*  {playerName} اسم العضوية.</font><br>';
+echo '<font color="orange">*  {erngold} رابط كسب الذهب.</font><p>';
+
+echo "\r\n<form method=\"post\" action=\"Adsss.php?t=1\">\r\n<div id=\"block\">\r\n\t<textarea name=\"news\" id=\"notice\">";
+echo $this->siteNews;
+echo "</textarea>\r\n\t<p class=\"btn\">\r\n\t\t<input id=\"btn_save\" type=\"image\" value=\"\" name=\"s1\" src=\"core-s/st-s/x.gif\" class=\"dynamic_img\" alt=\"";
+echo text_save_lang;
+echo "\"><br/>\r\n\t\t";
+if ( $this->saved )
+{
+    echo text_newssaved_lang;
+}
+echo "\t</p>\r\n</div>\r\n</form>";
+}
+if ( $this->selectedTabIndex == 4 )
+{
+echo "\r\n        </tr>\r\n    </tbody>\r\n</table><br />\r\n<table cellpadding=\"1\" cellspacing=\"1\" id=\"overview\" class=\"row_table_data\">\r\n\t<thead>\r\n\t\t<tr>\r\n\t\t\t<th colspan=\"6\">";
+echo LANGUI_MEBER_T1;
+echo "</th>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>";
+echo LANGUI_MEBER_T2;
+echo "</td>\r\n            <td>";
+echo LANGUI_MEBER_T3;
+echo "</td>\r\n            <td>";
+echo LANGUI_MEBER_T4;
+echo "</td><td>\n";
+echo LANGUI_MEBER_T5;
+echo "</td>\r\n            ";
+echo "</td>\r\n\t\t</tr>\r\n\t</thead>\r\n\t<tbody>\r\n\t\t";
+$_c = 0;
+while ( $this->Meber->next( ) )
+{
+    ++$_c;
+    $c = $_c + $this->pageIndex * $this->pageSize;
+    echo "\t\t<tr>\r\n\t\t\t<td class=\"nr\">";
+    echo $c++;
+echo "</td>\n";
+    echo "\r\n\t\t\t<td class=\"nam\">";
+echo "<a href=\"profile.php?uid=".$this->Meber->row['id']."\">".$this->Meber->row['name']."</a>\n";
+echo "</td>\n";
+    echo "\r\n\t\t\t<td class=\"nam\">";
+    echo htmlspecialchars( $this->Meber->row['last_login_date'] );
+echo "</td>\n";
+    echo "\r\n\t\t\t<td class=\"nam\">";
+                                if ( $this->Meber->row['gold_num'] > 1 ) {
+echo "<b>&nbsp;&nbsp;&nbsp;<img src=\"core-s/st-s/default/img/a/gold.gif\">&nbsp;&nbsp;".$this->Meber->row['gold_num']."</b>\n";
+}
+    if ( $this->Meber->row['gold_num'] == 0 ) {
+echo "&nbsp;&nbsp;&nbsp;<img src=\"core-s/st-s/default/img/a/gold_g.gif\">&nbsp;&nbsp;<span class=\"notice\">".$this->Meber->row['gold_num']."</span>\n";
+}
+echo "</td>\n";
+
+}
+echo "        <tr>\r\n            <td colspan=\"3\" class=\"table_body\"><div align=\"center\">";
+echo $this->getPreviousLink( );
+echo " &nbsp; | &nbsp; ";
+echo $this->getNextLink( );
+echo "</div></td>\r\n            <td class=\"table_body\"><div align=\"center\">\r\n\t\t\t";
+echo "<s";
+echo "elect name=\"p\" onchange=\"window.location.href=('badwords.php?p='+this.value)\">\r\n            ";
+$i = 1;
+$c = 0;
+while ( $i <= $this->pageCount )
+{
+    echo "            \t<option value=\"";
+    echo $c;
+    echo "\"";
+    if ( isset( $_GET['p'] ) && $_GET['p'] == $c )
+    {
+        echo " selected=\"selected\"";
+    }
+    echo ">";
+    echo $i;
+    echo "</option>\r\n            ";
+    ++$i;
+    ++$c;
+}
+echo "            </select>\r\n            </div></td>\r\n        </tr>\r\n\t</tbody>\r\n</table>\r\n</form>";
+}
+if ( $this->selectedTabIndex == 5 )
+{
+
+?>
+<br>
+        <table id="brought_in" cellpadding="3" cellspacing="1">
+        <thead>
+                <tr>
+                        <th colspan="4"><?php echo LANGUI_BAY_T4;?></th>
+                </tr>
+                <tr>
+                        <td><?php echo LANGUI_BAY_T5;?></td>
+                        <td><?php echo LANGUI_BAY_T6;?></td>
+                        <td><?php echo LANGUI_BAY_T7;?></td>
+                        <td><?php echo LANGUI_BAY_T8;?></td>
+                </tr>
+        </thead>
+<?php
+$found = false;
+while ($this->dataList->next()) {
+$m = new Payhis();
+$playerName = $this->dataList->row['usernam'];
+$userid = $m->getPlayerDataByName($playerName);
+$found = true;
+?>
+        <tr>
+            <td><center><?php echo $this->dataList->row['transID'];?></center></td>
+                <td><center><a href="profile.php?uid=<?php echo $userid['id'];?>"><?php  echo $this->dataList->row['usernam']; ?></a></center></td>
+                <td><center><?php echo $this->dataList->row['golds'];?></center></td>
+                <td><center><?php echo $this->dataList->row['money']; if ($this->dataList->row['type'] == 'sms') {echo " ريال";}else {echo " دولار";}?></center></td>
+        </tr>
+<?php
+ } 
+if (!$found) {
+?>
+<tr><td class="none" colspan="5"><center><?php echo LANGUI_BAY_T30; ?></center></td></tr>
+<?php
+}
+?>
+</table>
+<?php
+$m = new Payhis(); $payhistotal = $m->getTotalMoney(); ?>
+<table class="rate_details lang_rtl lang_ar" cellpadding="3" cellspacing="1">
+<thead>
+<tr><th colspan="2"><?php echo LANGUI_BAY_T1;?></th></tr>
+</thead>
+<tbody>
+<tr><td class="pic"><?php echo LANGUI_BAY_T2;?></td>
+<td class="pic"><?php echo $payhistotal['total_gold'];?></td>
+</tr>
+<tr><td class="pic"><?php echo "الارباح بالدولار";?></td>
+<td class="pic"><?php echo $payhistotal['total_cashu'];?></td>
+</tr>
+
+<tr><td class="pic"><?php echo "الارباح بالدرهم";?></td>
+<td class="pic"><?php echo $payhistotal['total_cashu']*3.67;?></td>
+</tr>
+
+</tbody>
+</table>
+<p><p><?php
+
+}else if ($_GET['t'] == 7) {
+}else if ($_GET['t'] == 6) {
+if (isset($_GET['admins'])) {
+?>
+        <table id="brought_in" cellpadding="3" cellspacing="1">
+        <thead>
+                <tr>
+                        <th colspan="5"><?php echo LANGUI_BAY_T4;?></th>
+                </tr>
+                <tr>
+                </tr>
+        </thead>
+<?php
+$found = false;
+require_once( MODEL_PATH."controlmember.php" );
+$m = new AdsssModel( );
+$this->Admin = $m->selectadmin();
+while ($this->Admin->next()) {
+$m = new Payhis();
+$found = true;
+?>
+        <tr>
+        </tr>
+<?php
+ } 
+if (!$found) {
+?>
+<tr><td class="none" colspan="5"><center>لم يسجل احد الى الان</center></td></tr>
+<?php
+}
+?>
+</table>
+<?php
+}
+}
+if ( $this->selectedTabIndex == 7 )
+{
+$vo = $this->voting;
+$explode = explode('|',$vo);
+$answer = explode(',',$explode[1]);
+$results = explode(',',$explode[2]);
+$answercont = count(explode(',',$explode[1]));
+$max = max($results);
+?>
+<table cellpadding="1" cellspacing="1" id="overviews">
+<thead>
+<tr><th colspan="<?php echo $answercont+1; ?>">نتيجة التصويت</th></tr>
+<tr><td>السؤال</td><td colspan="<?php echo $answercont; ?>">النتائج</td></tr>
+</thead>
+<tbody>
+<tr><td><center><b><span style="color:#008000; font-size:11px;"><?php echo $explode[0]; ?></span></b></center></td>
+<?php for($i = 0; $i < $answercont; $i++){ ?>
+<td><span style="font-size:11px;"><center><?php echo $answer[$i]; ?><br><?php if($max == $results[$i]){ echo '<b>'; } echo $results[$i]; if($max == $results[$i]){ echo '</b>'; } ?></b></center></span></td>
+<?php $allvo += $results[$i]; } ?>
+</tr>
+</tbody>
+</table>
+<br>
+<?php
+echo 'مجموع الاصوآت : <b>'. $allvo .'</b><br>';
+if(isset( $_GET['add'] )){
+?>
+<script language="JavaScript" type="text/javascript">
+
+function showCheckList() {
+	bid = document.getElementById('bid');
+	if(bid.value == 2) {
+		document.getElementById('conf_list').className = '';
+		document.getElementById('ally_list').className = '';
+		document.getElementById('user_list').className = 'hide';
+	}
+	else if (bid.value == 3) {
+		document.getElementById('conf_list').className = 'hide';
+		document.getElementById('ally_list').className = 'hide';
+		document.getElementById('user_list').className = '';
+	}
+	else {
+		document.getElementById('conf_list').className = 'hide';
+		document.getElementById('ally_list').className = 'hide';
+		document.getElementById('user_list').className = 'hide';
+	}
+}
+</script>
+<script language="JavaScript" type="text/javascript">
+
+    function addRow(element_id) {
+    	// element_id: user_list, ally_list
+
+    	liste = document.getElementById(element_id);
+    	liste = liste.getElementsByTagName('tbody')[0];
+
+    	var anzahl_trs = liste.getElementsByTagName('tr').length;
+    	var num_fields = anzahl_trs;
+    	var num_last_tr = anzahl_trs -1;
+
+    	lastTR = liste.getElementsByTagName('tr')[num_last_tr];
+		lastTD = lastTR.getElementsByTagName('td')[2];
+		lastIMG = lastTD.getElementsByTagName('img')[0];
+		lastTD.removeChild(lastIMG);
+
+    	newTR = document.createElement('tr');
+    	newTD1 = document.createElement('td');
+    	newTD2 = document.createElement('td');
+    	newTD3 = document.createElement('td');
+    	newTR.appendChild(newTD1);
+    	newTR.appendChild(newTD2);
+    	newTR.appendChild(newTD3);
+    	liste.appendChild(newTR);
+
+		var html_input_1 = '<input class="text" type="text" ';
+
+		if(element_id == 'ally_list') {
+			newTD1.className = 'ally';
+			newTD2.className = 'tag';
+			newTD3.className = 'ad';
+			newTD2.innerHTML = html_input_1 + 'id="answer_'+num_fields+'" class="text" name="answer['+num_fields+']" onkeyup="checkInputs('+num_fields+',\'allys\')">';
+			newTD1.innerHTML = 'الخيار '+num_fields+'';
+		}
+
+
+
+		newTD3.innerHTML = '<img class="add" src="core-s/st-s/default/img/f/plus.gif" title="إضافة" alt="إضافة" onclick="addRow(\''+element_id+'\')">';
+    }
+
+</script>
+<form action="Adsss.php?t=7&add" enctype="multipart/form-data" method="POST">
+<table cellpadding="1" cellspacing="1" id="ally_list"><thead>
+	<tr>
+        <th colspan="3">تصويت جديد</th>
+	</tr>
+	<tr>
+		<td></td>
+		<td>الادخال</td>
+		<td>إضافة</td>
+	</tr>
+	</thead><tbody>
+	<tr>
+		<td >السؤال</td>
+		<td ><input class="text" type="text" name="question" required/></td>
+		<td class="ad">-</td>
+	</tr>
+		<tr>
+		<td class="ally">الخيار 1</td>
+		<td class="tag"><input class="text" type="text" id="answer_1" name="answer[1]" onkeyup="checkInputs(1,'allys');" required/></td>
+		<td class="ad"><img class="add" src="core-s/st-s/default/img/f/plus.gif" title="إضافة" alt="إضافة" onclick="addRow('ally_list')" /></td>
+	</tr>
+</table>
+
+<p class="btn"><input type="image" value="" name="s1" id="btn_save" class="dynamic_img" src="core-s/st-s/x.gif" alt="حفظ"></p>
+</form><br>
+<?php echo $this->error; ?>
+<?php
+}else{
+echo '<a href="Adsss.php?t=7&add">تـصويت جديد</a>';
+}
+
+}
+if ( $this->selectedTabIndex == 8 )
+{
+?>
+<form action="Adsss.php?t=8" enctype="multipart/form-data" method="POST">
+<table cellpadding="1" cellspacing="1" id="overview" class="row_table_data"><thead>
+	<tr>
+        <th colspan="2">اسماء الملفات</th>
+	</tr>
+
+	</thead><tbody>
+	<tr>
+		<td >الاسم</td>
+		<td ><input class="text" type="text" name="name" value="<?php echo $_POST['name'];  ?>"/></td>
+	</tr>
+
+</table>
+
+<p class="btn"><input type="image" value="" name="s1" id="btn_save" class="dynamic_img" src="core-s/st-s/x.gif" alt="حفظ"></p>
+</form>
+<?php
+if($this->found){
+echo '<table cellpadding="1" cellspacing="1" id="overview" class="row_table_data"><thead>';
+echo '<tr><th colspan="1">الملفات التي تم زيارتها</th></tr>';
+echo '</thead><tbody>';
+while ( $this->file->next( ) )
+{
+echo '<tr><td >'.$this->file->row['name'].'</td></tr>';
+}
+echo '</table>';
+}
+}
+
+?>
+</body>
+</html>

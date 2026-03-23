@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="top"></div><h1 class="titleInHeader">إدارة اللعبة</h1>
+في النموذج المرفق يمكنك إرسال استفسارك إلى قسم الدعم في اللعبة. رجاؤنا أن تأخذ من وقت قليلاً وأن تجيب على القدر الذي تستطيعه من الأسئلة الموجودة، حتى نقدر  بالسرعة القصوى أن نجيب على استفسارك. بدون عنوان بريدي حقيقي لن نتمكن من الرد على استفسارك.<h4>خلل في اللعبة / خلل في تسجيل الدخول - سؤال عن قواعد اللعبة</h4>
+
+<form action='' method='post'>
+<table class="rate_details lang_rtl lang_ar" cellpadding="1" cellspacing="1">
+<thead>
+<tr>
+                <th colspan="2">الدعم الفني مراسلة بريديه</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>اسم المستخدم</td>
+<td><input type="text" maxlength='15' name="name" class="text"/></td>
+</tr>
+<tr>
+<td>ايميل المستخدم</td>
+<td><input type="text" maxlength='25' name="email" class="text"/></td>
+</tr>
+
+<tr>
+<td>المشكله</td>
+<td>
+<select name='title'>
+<option>اختر رجاء</option>
+<option>أسئلة عامة</option>
+<option>لا أستطيع تسجيل الدخول</option>
+<option>لا أستطيع تسجيل عضوية جديدة</option>
+</select>
+</td>
+</tr>
+
+
+<tr>
+<td>محتوى الرساله</td>
+<td><textarea name='msg' cols="43" rows="7"></textarea></td>
+</tr><p>
+</tbody>
+</table>
+<center>
+<input name='submit'  onClick="this.style.visibility='hidden';" onclick="return countClicks();" onclick="submitPressed()" type='submit' value='ارسل'>
+</center>
+</form><center>
+<?
+if ($_POST['submit']) {
+if ($_POST['msg'] == '') {
+?>
+<p class="error">احد الحقول فارغ </p>
+<?
+} else if ($_POST['name'] == '') 
+{
+?>
+<p class="error">اكتب الاسم</p>
+<?
+} else if ($_POST['email'] == '') 
+{
+?>
+<p class="error">اكتب الايميل</p>
+<?
+} else {
+$to = 'smartservs.com@gmail.com';
+$message = "رسالة جديده من اللعبه 
+الاسم : ".$_POST['name']."
+العنوان : ".$_POST['title']."
+الايميل : ".$_POST['email']."
+المحتوى : ".$_POST['msg']."";
+$subject1 = strip_tags(trim($_POST['title']));
+$name = strip_tags(trim($_POST['name']));
+$email = strip_tags(trim($_POST['email']));
+$subject = "رسالة جديده من اللعبه";
+$you = "rtatar.com@gmail.com";
+mail ( "$to" , "$subject" , "$message" , "Form:$you" );
+?> 
+<p class="error">تم الارسال</p>
+<?
+}
+}
+
+?>
+</body>
+</html>
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="ar"><head>    <meta charset="UTF-8">    <meta http-equiv="X-UA-Compatible" content="IE=edge">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"></head><body><?php
+include("core-s/conf-s/tcex-con.php");
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+?>
+<?php
+if ( $this->data['gold_num'] < 15 ){
+echo "<meta http-equiv=\"REFRESH\" content=\"0;url=village1.php\">\n";
+die ("لا يمكنك الدخول هنا.. الذهب قليل");
+
+}
+
+require_once(MODEL_PATH . 'build.php');
+$m = new BuildModel();
+$war = $this->queueModel->tasksInQueue['war_troops_summary']['to_me']['reinforce'];
+      if (0 < $war['number']) {
+           echo " عدد الجيوش القادمة";
+           echo " ";
+          echo $war['number']; 
+?>
+<p class="new_building"></p>
+<center>
+<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post"> 
+<table id="plusFunctions" cellpadding="1" cellspacing="1">
+
+
+<thead>
+<tr>
+		<th colspan="3">رسالة تأكيد</th>
+</tr>
+<tr>
+		<td>رسالة</td>
+		<td>التأكيد</td>
+                <td>الرفض</td>
+		
+</tr>
+</thead>
+<tbody>
+<td>هل انت متاكد من اتمام عملية وصول التعزيزات فورا؟</td>
+<td><center>
+<input type="submit" name="submit" value="نعم انا متأكد"></center>
+</td><td><center>
+<input type="submit" name="submit1" value="لا اريد.شكرا"></center></td>
+</form> 
+</tbody>
+</table>
+<?php
+$Id = $this->player->playerId; 
+$vlvid = $this->data['selected_village_id'];
+$gold = $this->data['gold_num']; 
+$time = date("5y-m-d");
+$heur =  date( "G:i:s");
+if (isset($_POST['submit1']))
+echo "<meta http-equiv=\"Refresh\" content=\"0; url=village1.php\">\n";
+if (isset($_POST['submit'])) { // if form has been submitted
+$gold = $this->data['gold_num'];
+if ($gold < 15 ) {die ("<h1><font color='red'>الذهب غير كافي</font>\n");}
+else {
+mysql_query("UPDATE p_queue set end_date='$time $heur' where to_village_id=$vlvid and proc_type='12'") or die(mysql_error());
+mysql_query("UPDATE p_players SET gold_num =gold_num - 15 WHERE id = $Id")or die(mysql_error());    
+echo "<meta http-equiv=\"REFRESH\" content=\"0;url=village1.php\">\n";
+echo "تمت العملية بنجاح و عادت قواتك الى القرية";
+echo "</div>\n";
+}}
+}
+else{
+echo "<p></p><br></br><p></p>";
+echo "ليست هناك اية تعزيزات قادمة اليك";
+echo "<meta http-equiv=\"REFRESH\" content=\"1;url=village1.php\">\n";
+}
+?><style>    @media screen and (max-width: 900px){    div#mid {        zoom: 90%;}}</style></body></html>

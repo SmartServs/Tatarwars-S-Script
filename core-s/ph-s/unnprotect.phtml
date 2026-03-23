@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+		       require ("core-s/conf-s/tcex-con.php");
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+?>
+
+<?php
+    echo "<font color='green' size='6'><center>الغاء الحماية</center></font>";
+echo '<br>';
+echo '<center>';
+echo '<img src=core-s/st-s/x1.png title="">';
+echo '<br>';
+echo '<br>';
+$goldar = $this->data['gold_num'];
+$golda  = 2000;
+$goldb  = $goldar - $golda;
+      if (2000 > $this->data['gold_num']) {
+          echo "<br>لا تملك ذهب كافي لإلغاء الحماية, وانت تملك الان";
+          echo "<b><font color='red'> ";
+          echo '<img src=core-s/st-s/default/img/a/gold.gif title=""></a> '.$this->data['gold_num'].'';
+          echo "</b></font> ";
+          echo LANGUI_PLUS_T31;
+} else 
+     if (2000 < $this->data['gold_num']) {
+          echo "<br>انت تملك الان";
+          echo "<b><font color='red'> ";
+          echo '<img src=core-s/st-s/default/img/a/gold.gif title=""></a> '.$this->data['gold_num'].'';
+          echo "</b></font> ";
+          echo LANGUI_PLUS_T31;
+          echo ' (ذهبك كافي لإلغاء الحماية)';
+      } 
+echo '</center>';
+echo '<br>';
+echo '<br>';
+    if( $this->appConfig['Game']['un7maya'] == 1){ echo '<span style="color:#008000;">الغاء الحماية مفعل</span>';echo '<br>'; } else { echo '<span style="color:#f00;">الغاء الحماية مقفل</span>';
+    echo "<tr>";
+echo '<br>'; } 
+echo '<br>';
+
+?>
+
+<center>
+    <input type="hidden" name="e" value="6">
+    <input type="hidden" name="protection" value="1">
+    <table cellpadding="1" cellspacing="1" id="change_mail" class="account">
+        <thead>
+            <tr>
+                <th colspan="2">الغاء الحماية</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="note" colspan="2">الغاء الحماية عن قريتك  
+
+ب2000 ذهب</td>
+            </tr>
+            
+            <tr>
+                <th>الغاء الحماية:</th>
+                <td>
+                    <p class="btn">
+                        <a href="?get=unhmaya"><input type="image" value="1" name="protection" id="btn_ok" class="dynamic_img" 
+
+src="core-s/st-s/x.gif" alt="تمام">
+           <?php
+		       require ("core-s/conf-s/tcex-con.php");
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+$Id = $this->player->playerId; 
+$village = $this->data['selected_village_id'];
+$gold = $this->data['gold_num'];
+if ( $this->appConfig['Game']['un7maya'] == 1 ) { 
+if($_GET['get'] == "unhmaya" and $gold >= 2000) { 
+echo "<meta http-equiv=\"REFRESH\" content=\"1;url=village1.php\">\n";
+
+mysql_query ("UPDATE  `p_players` SET  `gold_num` =  `gold_num` -2000 where  `p_players`.`id` =$Id");
+mysql_query("update p_players set registration_date = '1970-01-01 01:01:01' where  `p_players`.`id` =$Id") or die(mysql_error());
+echo '<p style="text-align: center; "><span style="font-family:tahoma,geneva,sans-serif;">';
+echo "<b><font color='red'>تم الغاء الحماية بنجاح!</font><b>"; 
+echo '<br>';
+echo '<br>';
+exit;
+
+}
+}
+		   ?>
+		   </tr>
+        </tbody>
+    </table>
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</body>
+</html>
+<style>
+    @media screen and (max-width: 900px){
+    div#mid {
+        zoom: 90%;
+}
+}
+</style>

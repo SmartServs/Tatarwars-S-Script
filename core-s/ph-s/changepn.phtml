@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+if ($this->data['player_type'] != 2)
+{
+echo "<center><h1><font color='red'>انت لا تملك الصلاحية</font></h1></center>\n";
+}
+else {
+require('core-s/conf-s/tcex-con.php');
+$db_connect = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']);
+mysql_select_db($AppConfig['db']['webdatabase'], $db_connect);
+?>
+<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
+<table id="plusFunctions" cellpadding="1" cellspacing="1">
+<thead>
+<tr>
+		<th colspan="3">تغيير الاسم</th>
+</tr>
+<tr>
+		<td>اسم اللاعب</td>
+		<td>الاسم الجديد</td>
+		<td>التأكيد</td>	
+</tr>
+</thead>
+<tbody>
+<?php echo '<td>
+اسم الاعب : <input name="name" type="text" /></td>
+<td><img src="core-s/st-s/x.gif" class="gold" alt="تعديل كمية الذهب" title="تعديل كمية الذهب"> الاسم الجديد:<input name="newname" type="text"  /></td>
+<td><input type="submit" name="submit" value="الارسال"></td>
+</form>';?><?php
+$name = $_POST['name'];
+$newname = $_POST['newname'];
+if (isset($_POST['submit'])) {
+if ($this->data['player_type'] < 2)
+{
+echo "<center><h1><font color='red'>انت لا تملك الصلاحية</font></h1></center>\n";
+}
+else{
+    mysql_query("UPDATE p_players SET name ='$newname' WHERE name ='$name'")or die(mysql_error());
+    mysql_query("UPDATE p_msgs SET from_player_name='$newname' WHERE from_player_name='$name'")or die(mysql_error());
+    mysql_query("UPDATE p_msgs SET to_player_name='$newname' WHERE to_player_name='$name'")or die(mysql_error());
+    mysql_query("UPDATE p_villages SET player_name ='$newname' WHERE player_name ='$name'")or die(mysql_error());
+    mysql_query("UPDATE p_rpts SET from_player_name='$newname' WHERE from_player_name='$name'")or die(mysql_error());
+    mysql_query("UPDATE p_rpts SET to_player_name='$newname' WHERE to_player_name='$name'")or die(mysql_error());
+    echo "<center><h1>تـم تـغـيـر الاسـم بـنـجـاح</h1></center>";
+}
+}
+?>
+</center>
+</tbody>
+</table>
+<?php
+}
+?>
+</body>
+</html>

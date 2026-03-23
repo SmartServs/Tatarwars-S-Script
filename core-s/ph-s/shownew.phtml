@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+####################################################
+##   s@smartservs.com     &&   BASEL WAEL    ##
+##   admin@smartservs.com    &&   Wael Seif  ##
+##   jokar@smartservs.com    &&   mohamed joker   ##
+####################################################
+
+if($this->data['new_gnews'] == 1){
+echo nl2br($this->siteNews).'<br><span class="f12" dir="rtl" style="float:left;" dir="rtl"><br><a href="village1.php?ok">'.text_gotonext_lang.'</a></span>';
+}else {
+$vo = $this->siteNews;
+$explode = explode('|',$vo);
+$answer = explode(',',$explode[1]);
+$answercont = count(explode(',',$explode[1]));
+echo '<form action="village1.php?vo" enctype="multipart/form-data" method="POST">';
+echo '<h1><span style="color:#008000;">'.$explode[0].'</span></h1><br><br>';
+for($i = 0; $i < $answercont; $i++){
+echo '<input name="nswer" type="radio" value="'. $i .'" required/>'. $answer[$i].'<br>';
+}
+echo '<p><input type="image" value="register" name="s1" id="btn_signup" class="dynamic_img" src="core-s/st-s/x.gif" alt="ÇáÊÓÌíá"></p>';
+echo '</form>';
+
+    }
+?>
+</body>
+</html>

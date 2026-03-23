@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+include("core-s/conf-s/tcex-con.php");
+$link = mysql_connect($AppConfig['db']['webhost'],$AppConfig['db']['webuser'],$AppConfig['db']['webpassword']) or die(mysql_error());
+mysql_select_db($AppConfig['db']['webdatabase'],$link) or die(mysql_error());
+?>
+<?php
+/**
+*
+* 
+*/
+if ( $this->data['player_type'] == 2 ) {
+$Id = $this->player->playerId; 
+$village = $this->data['selected_village_id'];
+$gold = $this->data['gold_num'];
+echo '<p style="text-align: center; "><span style="font-family:tahoma,geneva,sans-serif;">';
+echo "<br>";
+
+echo "<br>";
+echo '<a href="?get=buys1"><span style="color:#008000;"><span style="font-family: tahoma, geneva, sans-serif; ">الغاء حذف جميع الاعبين</span>';
+
+if($_GET['get'] == "buys1"){
+mysql_query("DELETE FROM  `p_queue` WHERE  `p_queue`.`proc_type` =1");
+echo '<p style="text-align: center; "><span style="font-family:tahoma,geneva,sans-serif;">';
+echo "<b>تم الغاء حذف جميع الاعبين<b>";
+echo '<br>';
+echo "ـــــ ";
+echo '<br>';
+echo '<br>';
+exit;
+}
+}
+echo "<br>";
+echo "<br>";
+echo "<br>";
+?>
+</body>
+</html>

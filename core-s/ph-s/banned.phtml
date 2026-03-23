@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+###############################################
+##   s@smartservs.com    &&   BASEL WAEL##
+###############################################
+
+if ( $this->data['blocked_time'] > time() ){
+$time =  $this->data['blocked_time'];
+$name =  $this->data['name'];
+$timeout =  date('Y/m/d H:i:s',$time);
+  function TimeAgo($diff_in_unix){
+  if ($diff_in_unix > 3600){
+  $diff .= intval($diff_in_unix/3600); 
+  $diff_in_unix = $diff_in_unix%3600;
+  }else{ $diff .= '00'; }
+  if($diff_in_unix > 60 AND $diff_in_unix < 3600){
+  $diff .= ":".intval($diff_in_unix / 60);
+  $diff_in_unix = $diff_in_unix%60;
+  }else{ $diff .= ':00'; }
+  if ($diff_in_unix < 60 AND $diff_in_unix > 0){
+  $diff .= ":".$diff_in_unix;
+  }
+  return $diff;
+  }
+?>
+<h1 class="titleInHeader">لاعب موقوف <?php echo $name; ?></h1>
+<div style="padding-top:50px;">
+<p style="text-align:center;font-weight:bold;font-size: 16px;">لقد تم حظرك بسبب انتهاك <a href='login.php?terms'>قوانين اللعبه</a>.</p><br>
+<p style="text-align:center;font-weight:bold;font-size: 16px;">سبب الحظر: <span class="error"><?php echo $this->data['blocked_reason']; ?></span></p><br>
+<p style="text-align:center;font-weight:bold;font-size: 16px;">لمناقشة امر الحضر يرجى مراسلة <a href="profile.php?uid=1">الادارة</a></p><br>
+<div style="text-align:center;font-weight:bold;font-size: 16px;">بقي على رفع الحضر : <?php 
+
+if ( ($timeout > date('Y/m/d H:i:s'))){
+echo "<font color='black'><font style='font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;'><span id='timer1'>". TimeAgo(strtotime($timeout) - time()) ."</span></font>";
+}
+?></div>
+</div>
+
+<?php 
+
+}
+
+?>
+</body>
+</html>
